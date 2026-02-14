@@ -1,0 +1,21 @@
+# Docker Compose addition for D&D site
+# Add this service to your existing docker-compose.yaml
+
+  dnd-site:
+    image: caddy:2-alpine
+    container_name: dnd_site
+    restart: always
+    ports:
+      - "8080:80"  # Map to port 8080 on host, or change to "80:80" if dedicated
+    volumes:
+      - /var/www/dnd-site:/usr/share/caddy
+      - ./Caddyfile.dnd:/etc/caddy/Caddyfile
+    networks:
+      - nexus_net  # Use existing network from nexus365
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dnd.rule=Host(`dnd.caravanserai.gr`)"
+      - "traefik.http.routers.dnd.tls=true"
+      - "traefik.http.routers.dnd.tls.certresolver=letsencrypt"
+
+# Alternative: If you want it completely separate, use this standalone docker-compose.yaml:
