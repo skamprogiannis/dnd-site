@@ -64,9 +64,10 @@ def process_html_file(source_file, target_file, slug, link_map, original_main_na
 
         if new_path:
             # If the link points to the CURRENT file being processed
+            # We must include the full path because <base href=".."> is present
             if source_file.name == path or Path(path).name == source_file.name:
                 if anchor:
-                    return f'href="#{anchor}"'
+                    return f'href="{slug}/{target_file.name}#{anchor}"'
                 else:
                     return f'href="{slug}/{new_path}"'
 
@@ -144,8 +145,8 @@ def process_html_file(source_file, target_file, slug, link_map, original_main_na
 
         if img_name:
             print(f"    Linked image: {img_name}")
-            # Always convert to <img> tag, even if source was <span>
-            return f'<img{attrs_before}src="images/{img_name}"{attrs_after}>'
+            # Use slug/images/... because of <base href="..">
+            return f'<img{attrs_before}src="{slug}/images/{img_name}"{attrs_after}>'
 
         print(
             f"    Warning: Could not match image for {name_match.group(2) if name_match else 'unknown'}"
