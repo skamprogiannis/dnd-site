@@ -100,7 +100,19 @@ def process_html_file(source_file, target_file, slug, link_map, original_main_na
     )
 
     # 7. Replace Base64 images with links to local files
-    # Find all <img src="data:image/..." ...> tags AND <span src="data:image..."> tags
+    # Obsidian often exports images as <span src="data:..."><img src="data:..."></span>
+    # We want to replace this whole block with a single <img> tag.
+
+    # First, let's normalize the Obsidian span+img structure to just the img tag
+    # to avoid double-processing and duplication.
+    content = re.sub(
+        r'<span([^>]*?)src="data:image/[^;]+;base64,[^"]+"[^>]*?>(<img[^>]*?src="data:image/[^;]+;base64,[^"]+"[^>]*?>)</span>',
+        r"\2",
+        content,
+        flags=re.DOTALL,
+    )
+
+    # Now find all <img src="data:image/..." ...> tags AND any remaining <span src="data:image..."> tags
     def image_replacer(match):
         tag_name = match.group(1)  # img or span
         attrs_before = match.group(2)
