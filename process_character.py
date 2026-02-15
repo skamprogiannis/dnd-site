@@ -98,16 +98,65 @@ def process_html_file(source_file, target_file, slug, link_map, original_main_na
         content,
     )
 
-    # 6. Update titles/descriptions
-    title = target_file.stem.replace("-", " ").title()
+    # 7. Replace Base64 images with links to local files
+    # Find all <img src="data:image/..." ...> tags
+    def image_replacer(match):
+        attrs_before = match.group(1)
+        # ext = match.group(2) # We don't rely on this extension, we check the filesystem
+        # b64_data = match.group(3)
+        attrs_after = match.group(4)
+
+        # Try to find a name in alt or title
+        all_attrs = attrs_before + attrs_after
+        name_match = re.search(r'(alt|title)="([^"]+)"', all_attrs)
+
+        img_name = None
+        if name_match:
+            # Clean name: remove special chars, spaces to hyphens
+            raw_name = name_match.group(2)
+            # Try to match existing files in the images directory
+            # We expect images to be in {deploy_dir}/images/
+            img_dir = Path(target_file).parent / "images"
+            if not img_dir.exists():
+                return match.group(0)  # Keep original if no images dir
+
+            # Try exact match first
+            for ext in [".png", ".jpg", ".jpeg", ".gif"]:
+                # Check for "Lucian.png"
+                if (img_dir / f"{raw_name}{ext}").exists():
+                    img_name = f"{raw_name}{ext}"
+                    break
+                # Check for "lucian.png" (lowercase)
+                if (img_dir / f"{raw_name.lower()}{ext}").exists():
+                    img_name = f"{raw_name.lower()}{ext}"
+                    break
+                # Check for hyphenated "lucian-shadows.png"
+                clean_name = raw_name.replace(" ", "-").lower()
+                if (img_dir / f"{clean_name}{ext}").exists():
+                    img_name = f"{clean_name}{ext}"
+                    break
+                # Special check: try to match against copied files which were forced to be hyphenated
+                # Our copy logic was: dest_name = img.name.replace(" ", "-").lower()
+                # So we should look for that exact pattern
+                target_img_name = raw_name.replace(" ", "-").lower() + ext
+                if (img_dir / target_img_name).exists():
+                    img_name = target_img_name
+                    break
+
+        if img_name:
+            print(f"    Linked image: {img_name}")
+            return f'<img{attrs_before}src="images/{img_name}"{attrs_after}>'
+
+        print(
+            f"    Warning: Could not match image for {name_match.group(2) if name_match else 'unknown'}"
+        )
+        # Return original matched string if no file found (don't break it)
+        return match.group(0)
+
+    # Pattern: <img ... src="data:image/(png|jpeg|jpg|gif);base64,([A-Za-z0-9+/=]+)" ...>
     content = re.sub(
-        r'<meta name="description" content="[^"]*">',
-        f'<meta name="description" content="D&D Character - {title}">',
-        content,
-    )
-    content = re.sub(
-        r'<meta property="og:description" content="[^"]*">',
-        f'<meta property="og:description" content="D&D Character - {title}">',
+        r'<img([^>]+)src="data:image/([^;]+);base64,([^"]+)"([^>]*)>',
+        image_replacer,
         content,
     )
 
