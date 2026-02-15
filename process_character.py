@@ -64,10 +64,11 @@ def process_html_file(source_file, target_file, slug, link_map, original_main_na
 
         if new_path:
             # If the link points to the CURRENT file being processed
-            # We must include the full path because <base href=".."> is present
             if source_file.name == path or Path(path).name == source_file.name:
                 if anchor:
-                    return f'href="{slug}/{target_file.name}#{anchor}"'
+                    # Fix: Don't include filename for internal anchors
+                    # Just return the anchor itself. Obsidian JS handles this better.
+                    return f'href="#{anchor}"'
                 else:
                     return f'href="{slug}/{new_path}"'
 
