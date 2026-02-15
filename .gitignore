@@ -9,3 +9,7 @@ __pycache__/
 *.swo
 .env.local
 .env.*.local
+staging/
+extract_images.py
+rebuild_lucian.py
+lucian/index.html.restored
