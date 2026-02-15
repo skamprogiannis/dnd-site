@@ -50,35 +50,46 @@ def process_html_file(source_file, target_file, slug, link_map, original_main_na
         parts = href.split("#", 1)
         path = parts[0]
         anchor = parts[1] if len(parts) > 1 else None
-
+        
         # Check if this path is in our link map
         new_path = None
-        # Try exact match
-        if path in link_map:
-            new_path = link_map[path]
-        # Try basename match (e.g. "Lucian/Father Davor.html" -> "Father Davor.html")
-        else:
-            base_path = Path(path).name
-            if base_path in link_map:
-                new_path = link_map[base_path]
-
+        
+        # Normalize the path from href for matching
+        norm_path = path.replace("%20", " ").strip().lower()
+        if norm_path.endswith(".html"):
+            norm_path = norm_path[:-5]
+        norm_path = norm_path.replace(" ", "-").replace("_", "-")
+        
+        # Search link_map keys
+        for key, val in link_map.items():
+            norm_key = key.lower()
+            if norm_key.endswith(".html"):
+                norm_key = norm_key[:-5]
+            norm_key = norm_key.replace(" ", "-").replace("_", "-")
+            
+            if norm_path == norm_key:
+                new_path = val
+                break
+        
         if new_path:
+            print(f"    Linked path: {path} -> {new_path}")
             # If the link points to the CURRENT file being processed
-            if source_file.name == path or Path(path).name == source_file.name:
+            # Just return the anchor itself if present. Obsidian JS handles this better.
+            current_target_name = link_map[source_file.name]
+            if new_path == current_target_name:
                 if anchor:
-                    # Fix: Don't include filename for internal anchors
-                    # Just return the anchor itself. Obsidian JS handles this better.
                     return f'href="#{anchor}"'
                 else:
                     return f'href="{slug}/{new_path}"'
-
+            
             # Link to another page in the same character set
             result = f'href="{slug}/{new_path}"'
             if anchor:
                 result += f"#{anchor}"
             return result
-
+            
         return match.group(0)
+
 
     content = re.sub(r"href=\"([^\"]*)\"", link_replacer, content)
 
@@ -256,6 +267,7 @@ def main():
             new_name = "index.html"
         link_map[f.name] = new_name
 
+    print(f"  Link map keys: {list(link_map.keys())}")
     # 3. Process files
     processed_names = []
     main_page_name = main_page.name if main_page else ""
