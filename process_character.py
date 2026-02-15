@@ -84,7 +84,10 @@ def process_html_file(source_file, target_file, slug, link_map, original_main_na
 
     # 3. Remove target="_self"
     content = re.sub(r"\s*target=\"_self\"", "", content)
-
+    
+    # FIX: Remove data-path attributes that cause "This page does not exist yet" overlay
+    content = re.sub(r'\s*data-path="[^"]*"', "", content)
+    
     # 4. Clean content
     content = clean_content(content)
 
@@ -236,12 +239,23 @@ def main():
     # 2. Create link map
     link_map = {}
     main_page = None
-    max_size = -1
-    for f in html_files:
-        size = f.stat().st_size
-        if size > max_size:
-            max_size = size
-            main_page = f
+    
+    # Identify the main page
+    # Priority: 1. matches slug, 2. contains 'index', 3. largest file
+    slug_match = [f for f in html_files if f.stem.lower() == slug or slug in f.stem.lower()]
+    index_match = [f for f in html_files if 'index' in f.name.lower()]
+    
+    if slug_match:
+        main_page = slug_match[0]
+    elif index_match:
+        main_page = index_match[0]
+    else:
+        max_size = -1
+        for f in html_files:
+            size = f.stat().st_size
+            if size > max_size:
+                max_size = size
+                main_page = f
 
     for f in html_files:
         new_name = f.name.replace(" ", "-").lower()
@@ -268,7 +282,18 @@ def main():
             if img.is_file():
                 shutil.copy2(img, img_dest / img.name.replace(" ", "-").lower())
 
-    # 5. Update global metadata
+    # 5. Copy other assets (JSON, PDF)
+    print(f"  Copying other assets...")
+    for ext in ['*.json', '*.pdf']:
+        for f in source_dir.glob(ext):
+            dest_name = f.name.replace(" ", "-").lower()
+            # If the name is something like Lucian_Dhampir_Ranger.json, rename to character slug
+            if f.suffix == '.json' and len(list(source_dir.glob('*.json'))) == 1:
+                dest_name = f"{slug}.json"
+            shutil.copy2(f, deploy_dir / dest_name)
+            print(f"    Copied: {dest_name}")
+
+    # 6. Update global metadata
     update_global_metadata(site_dir, slug, processed_names)
 
     print(f"\nSuccessfully processed character '{slug}'!")
