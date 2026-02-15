@@ -103,80 +103,73 @@ def process_html_file(source_file, target_file, slug, link_map, original_main_na
         content,
     )
 
-    # 7. Replace Base64 images with links to local files
-    # Obsidian often exports images as <span src="data:..."><img src="data:..."></span>
-    # We want to replace this whole block with a single <img> tag.
-
-    # First, let's normalize the Obsidian span+img structure to just the img tag
-    # to avoid double-processing and duplication.
-    content = re.sub(
-        r'<span([^>]*?)src="data:image/[^;]+;base64,[^"]+"[^>]*?>(<img[^>]*?src="data:image/[^;]+;base64,[^"]+"[^>]*?>)</span>',
-        r"\2",
-        content,
-        flags=re.DOTALL,
-    )
-
-    # Now find all <img src="data:image/..." ...> tags AND any remaining <span src="data:image..."> tags
+    # 7. Replace images with links to local files
+    # Handle both Base64 and regular src attributes
     def image_replacer(match):
         tag_name = match.group(1)  # img or span
         attrs_before = match.group(2)
-        # ext = match.group(3)
-        # b64_data = match.group(4)
-        attrs_after = match.group(5)
-
-        # Try to find a name in alt or title
-        all_attrs = attrs_before + attrs_after
+        src_val = match.group(3)
+        attrs_after = match.group(4)
+        
+        # Try to find a name in alt, title, or src itself
+        all_attrs = attrs_before + attrs_after + f' src="{src_val}"'
         name_match = re.search(r'(alt|title)="([^"]+)"', all_attrs)
-
-        img_name = None
+        
+        raw_name = None
         if name_match:
-            # Clean name: remove special chars, spaces to hyphens
             raw_name = name_match.group(2)
+        elif not src_val.startswith("data:"):
+            raw_name = Path(src_val).name
+            
+        img_name = None
+        if raw_name:
+            # Clean name: remove special chars, spaces to hyphens
             # Try to match existing files in the images directory
-            # We expect images to be in {deploy_dir}/images/
             img_dir = Path(target_file).parent / "images"
             if not img_dir.exists():
                 return match.group(0)
-
+                
             # Check if name already has extension
             has_ext = any(
                 raw_name.lower().endswith(e) for e in [".png", ".jpg", ".jpeg", ".gif"]
             )
-
+            
             candidates = []
             if has_ext:
                 candidates.append(raw_name)
                 candidates.append(raw_name.lower())
                 candidates.append(raw_name.replace(" ", "-").lower())
+                candidates.append(raw_name.replace(" ", "_").lower())
             else:
                 for ext in [".png", ".jpg", ".jpeg", ".gif"]:
                     candidates.append(f"{raw_name}{ext}")
                     candidates.append(f"{raw_name.lower()}{ext}")
                     candidates.append(f"{raw_name.replace(' ', '-').lower()}{ext}")
-
+                    candidates.append(f"{raw_name.replace(' ', '_').lower()}{ext}")
+            
             for candidate in candidates:
                 if (img_dir / candidate).exists():
                     img_name = candidate
                     break
-
+        
         if img_name:
             print(f"    Linked image: {img_name}")
             # Use slug/images/... because of <base href="..">
             return f'<img{attrs_before}src="{slug}/images/{img_name}"{attrs_after}>'
-
-        print(
-            f"    Warning: Could not match image for {name_match.group(2) if name_match else 'unknown'}"
-        )
+            
         return match.group(0)
 
-    # Updated pattern to catch both img and span tags with data URIs
-    # Group 1: tag name (img|span)
-    # Group 2: attrs before src
-    # Group 3: image type
-    # Group 4: base64 data
-    # Group 5: attrs after src
+    # First, let's normalize the Obsidian span+img structure to just the img tag
     content = re.sub(
-        r'<(img|span)([^>]*?)src="data:image/([^;]+);base64,([^"]+)"([^>]*)>',
+        r'<span([^>]*?)src="([^"]+)"[^>]*?>(<img[^>]*?src="([^"]+)"[^>]*?>)</span>',
+        r"\3",
+        content,
+        flags=re.DOTALL,
+    )
+
+    # Match <img ... src="..." ...> or <span ... src="..." ...>
+    content = re.sub(
+        r'<(img|span)([^>]*?)src="([^"]+)"([^>]*)>',
         image_replacer,
         content,
         flags=re.DOTALL,
