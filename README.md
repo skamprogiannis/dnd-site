@@ -1,72 +1,66 @@
-# D&D Character Site
+# Chronicles of Caravanserai
 
-Static HTML site for hosting D&D character sheets on **dnd.caravanserai.gr**. Hosted on GitHub Pages.
+Welcome, travelers. This repository hosts the character sheets, lore, and history of our D&D campaign at **[dnd.caravanserai.gr](https://dnd.caravanserai.gr)**.
 
-## 🚀 Deployment (GitHub Pages)
+It allows us to publish our Obsidian notes directly to the web, creating a beautiful and permanent record of our adventures.
 
-This site is hosted on GitHub Pages. To deploy changes, simply push to the `main` branch.
+## 🗡️ How to Add Your Character
 
-1. **Commit your changes:**
+If you are a player in the campaign, follow these steps to add your character sheet to the site.
 
-   ```bash
-   git add .
-   git commit -m "Update character sheets"
-   ```
+### 1. Prepare Your Notes
 
-2. **Push to GitHub:**
+Export your character notes from Obsidian as HTML files.
 
-   ```bash
-   git push origin main
-   ```
+- Make sure all your linked images are in a folder named `Images` next to your HTML files.
+- Put everything in a folder named after your character (e.g., `Kraag/`).
 
-3. **Verify:**
-   Visit [https://dnd.caravanserai.gr](https://dnd.caravanserai.gr)
+### 2. Run the Magic Script
 
-## 🎲 Adding New Characters
+We have a script that automatically fixes links, optimizes images, and makes everything web-ready.
 
-1. **Process Obsidian Export:**
-   Use the `process_character.py` script to format your Obsidian exports correctly for the web. This script fixes links, optimizes images (converting Base64 to files), and handles metadata.
+1.  Open a terminal in this folder.
+2.  Run the following command (replace the path and name):
 
-   ```bash
-   cd ~/tabletop_games/D&D/dnd_site
-   python3 process_character.py "../Characters/YourCharacterFolder" "your-slug"
-   ```
+    ```bash
+    python3 process_character.py "../path/to/your/ObsidianExport/Kraag" "kraag"
+    ```
 
-   - Replace `../Characters/YourCharacterFolder` with the path to your Obsidian HTML export folder.
-   - Replace `your-slug` with the URL name you want (e.g., `kraag`).
+    - **First argument:** The path to your exported Obsidian folder.
+    - **Second argument:** The "slug" (URL name) for your character (lowercase, no spaces, e.g., `kraag` or `lucian`).
 
-2. **Add to Landing Page:**
-   Open `index.html` and add a new character card inside the `<main class="character-grid">` section:
+    _The script will create a new folder in this repository with your optimized files._
 
-   ```html
-   <a href="your-slug/" class="character-card">
-     <h2>Character Name</h2>
-     <p class="role">Class | Location</p>
-     <p class="description">Brief description of the character.</p>
-   </a>
-   ```
+### 3. Add to the Homepage
 
-3. **Deploy:**
-   Commit and push your changes to GitHub.
+Open `index.html` and find the `<main class="character-grid">` section. Copy and paste the block below, filling in your details:
 
-## 📁 Structure
-
-```
-dnd_site/
-├── index.html                    # Main landing page
-├── site-lib/                     # Metadata for Obsidian JS
-│   ├── metadata.json
-│   └── search-index.json
-├── lucian/                       # Example character folder
-│   ├── index.html               # Main character sheet
-│   ├── father-davor.html        # Related NPC
-│   └── images/                  # Extracted images (optimized)
-├── process_character.py          # Script to process Obsidian exports
-└── CNAME                         # Custom domain configuration for GitHub Pages
+```html
+<a href="kraag/" class="character-card">
+  <p class="role">Orc Barbarian | Many-Arrows</p>
+  <h2>Kraag</h2>
+  <p class="description">A brief description of your character goes here...</p>
+  <div class="card-footer">View Character Sheet</div>
+</a>
 ```
 
-## 🛠️ Technical Details
+### 4. Publish
 
-- **Obsidian Compatibility:** The HTML files use minified inline JS that expects a certain structure. We include `site-lib/` metadata files and inject a `<base href="..">` tag to ensure correct rendering.
-- **Image Optimization:** The processing script automatically extracts Base64 images from Obsidian exports and saves them as physical files, reducing HTML size from ~30MB to ~2MB.
-- **Hosting:** Static hosting via GitHub Pages with a custom domain (`dnd.caravanserai.gr`).
+Commit your changes and push them to GitHub. The site updates automatically!
+
+```bash
+git add .
+git commit -m "Add Kraag to the chronicles"
+git push origin main
+```
+
+---
+
+## 🛠️ For the Tech-Savvy (Technical Details)
+
+- **Hosting:** The site is hosted on GitHub Pages and served via the custom domain `dnd.caravanserai.gr`.
+- **Obsidian Compatibility:** Obsidian exports often use absolute paths and Base64 images. Our `process_character.py` script:
+  - Extracts Base64 images into optimized `.png` files (reducing file sizes by ~90%).
+  - Injects a `<base>` tag to ensure internal wiki-links work correctly.
+  - Fixes metadata fetches for the interactive graph/search features.
+- **Structure:** Each character gets their own directory (e.g., `lucian/`), keeping the repository clean and modular.
