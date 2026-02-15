@@ -1,8 +1,8 @@
-# Chronicles of Caravanserai
+# D&D Character Site
 
-Welcome, travelers. This repository hosts the character sheets, lore, and history of our D&D campaign at **[dnd.caravanserai.gr](https://dnd.caravanserai.gr)**.
+This repository hosts the character sheets, lore, and history of our D&D campaign at **[dnd.caravanserai.gr](https://dnd.caravanserai.gr)**.
 
-It allows us to publish our Obsidian notes directly to the web, creating a beautiful and permanent record of our adventures.
+It allows us to publish our Obsidian notes directly to the web.
 
 ## 🗡️ How to Add Your Character
 
