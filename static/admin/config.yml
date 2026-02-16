@@ -15,7 +15,7 @@ collections:
   - name: "characters"
     label: "Characters"
     label_singular: "Character"
-    folder: "content/Characters"
+    folder: "content/characters"
     extension: "md"
     format: "frontmatter"
     create: true
@@ -30,7 +30,7 @@ collections:
   - name: "npcs"
     label: "NPCs"
     label_singular: "NPC"
-    folder: "content/NPCs"
+    folder: "content/npcs"
     extension: "md"
     format: "frontmatter"
     create: true
@@ -45,7 +45,7 @@ collections:
   - name: "lore"
     label: "Lore"
     label_singular: "Lore Entry"
-    folder: "content/Lore"
+    folder: "content/lore"
     extension: "md"
     format: "frontmatter"
     create: true
@@ -59,7 +59,7 @@ collections:
   - name: "backgrounds"
     label: "Custom Backgrounds"
     label_singular: "Custom Background"
-    folder: "content/Custom Backgrounds"
+    folder: "content/custom-backgrounds"
     extension: "md"
     format: "frontmatter"
     create: true
