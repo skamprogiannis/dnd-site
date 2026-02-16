@@ -1,5 +1,5 @@
 ---
-name: Lady Isovold
+title: Lady Isovold
 race: Vampire
 faction: Night Masks
 role: Master of Coin / Antagonist

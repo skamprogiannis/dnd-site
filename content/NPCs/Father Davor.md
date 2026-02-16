@@ -1,5 +1,5 @@
 ---
-name: Father Davor
+title: Father Davor
 race: Human
 class: Cleric
 deity: Ilmater

@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager | Chronicles of Lemuria</title>
+  <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
-    /* Clean Vault Lock */
     #vault-lock {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -19,39 +19,42 @@
     }
     #lock-form {
       background: #1a1a20;
-      padding: 2rem;
+      padding: 2.5rem;
       border-radius: 8px;
       border: 1px solid #393639;
       text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       width: 100%;
-      max-width: 320px;
+      max-width: 350px;
     }
-    #lock-form h1 { color: #7b97aa; margin-bottom: 1rem; font-size: 1.2rem; }
+    #lock-form h1 { color: #7b97aa; margin-bottom: 1.5rem; font-size: 1.5rem; }
     #lock-form input {
       background: #161618;
       border: 1px solid #393639;
       color: #ebebec;
-      padding: 0.6rem;
+      padding: 0.8rem;
       border-radius: 4px;
       width: 100%;
       box-sizing: border-box;
       margin-bottom: 1rem;
+      font-size: 1rem;
     }
-    #error-msg { color: #ff5555; font-size: 0.8rem; margin-bottom: 1rem; display: none; }
+    #lock-form input:focus { outline: none; border-color: #7b97aa; }
+    #error-msg {
+      color: #ff5555;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
     #lock-form button {
       background: #7b97aa;
       color: #161618;
       border: none;
-      padding: 0.6rem 1.5rem;
+      padding: 0.8rem 2rem;
       border-radius: 4px;
       cursor: pointer;
       font-weight: bold;
       width: 100%;
-    }
-    
-    /* Decap CMS Minimal Overrides - ensuring it stays in its default light theme */
-    #nc-root {
-      background-color: #fff !important;
     }
   </style>
 </head>
@@ -59,18 +62,25 @@
   <div id="vault-lock">
     <div id="lock-form">
       <h1>Chronicles Admin</h1>
-      <input type="password" id="vault-pass" placeholder="Secret Phrase..." autofocus />
-      <div id="error-msg">Incorrect phrase.</div>
+      <input type="password" id="vault-pass" placeholder="Enter Secret Phrase..." autofocus />
+      <div id="error-msg">The vault remains sealed. Try again.</div>
       <button onclick="unlockVault()">Unlock Vault</button>
     </div>
   </div>
 
   <script>
+    function loadCMS() {
+      const script = document.createElement('script');
+      script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
+      document.body.appendChild(script);
+    }
+
     function unlockVault() {
       const pass = document.getElementById('vault-pass').value;
       if (pass === "Kaarg") {
         localStorage.setItem('vault_unlocked', 'true');
         document.getElementById('vault-lock').style.display = 'none';
+        loadCMS();
       } else {
         document.getElementById('error-msg').style.display = 'block';
         document.getElementById('vault-pass').value = '';
@@ -79,13 +89,12 @@
 
     if (localStorage.getItem('vault_unlocked') === 'true') {
       document.getElementById('vault-lock').style.display = 'none';
+      loadCMS();
     }
 
     document.getElementById('vault-pass').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') unlockVault();
     });
   </script>
-  <!-- Load Decap normally -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>

@@ -8,7 +8,7 @@ const CharacterSheet: QuartzComponent = ({ fileData, displayClass, cfg }: Quartz
     return null
   }
 
-  // Extract filename for the download attribute
+  // Extract filename
   const fileName = sheetPath.split("/").pop() || "character.json"
 
   return (
@@ -39,6 +39,7 @@ const CharacterSheet: QuartzComponent = ({ fileData, displayClass, cfg }: Quartz
 CharacterSheet.css = `
 .character-sheet a:hover {
   background-color: var(--tertiary) !important;
+  color: var(--light) !important;
 }
 `
 

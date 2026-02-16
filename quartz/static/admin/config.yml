@@ -12,8 +12,11 @@ collections:
   - name: "characters"
     label: "Characters"
     folder: "content/Characters"
+    extension: "md"
+    format: "frontmatter"
     create: true
     slug: "{{title}}"
+    identifier_field: "title"
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Character Sheet (JSON)", name: "sheet", widget: "file", required: false}
@@ -23,8 +26,11 @@ collections:
   - name: "npcs"
     label: "NPCs"
     folder: "content/NPCs"
+    extension: "md"
+    format: "frontmatter"
     create: true
     slug: "{{title}}"
+    identifier_field: "title"
     fields:
       - {label: "Name", name: "title", widget: "string"}
       - {label: "Race", name: "race", widget: "string"}
