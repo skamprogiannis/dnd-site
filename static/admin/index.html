@@ -7,7 +7,7 @@
   <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
-    /* Clean Vault Lock */
+    /* Full-screen Vault Overlay */
     #vault-lock {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -15,7 +15,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 10000;
+      z-index: 100000;
       font-family: system-ui, -apple-system, sans-serif;
     }
     #lock-form {
@@ -89,24 +89,8 @@
       background-color: #fff !important;
     }
   </style>
-</head>
-<body class="locked">
-  <div id="vault-lock">
-    <div id="lock-form">
-      <h1>Edit the Chronicles</h1>
-      <div class="input-group">
-        <input type="password" id="vault-pass" placeholder="Secret Phrase..." autofocus />
-        <button id="toggle-pass" type="button" onclick="handleTogglePass()">
-          <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-        </button>
-      </div>
-      <div id="error-msg">The archives remain sealed. Try again.</div>
-      <button class="submit-btn" type="button" onclick="handleUnlock()">Unseal the Archive</button>
-    </div>
-  </div>
-
   <script>
-    function handleTogglePass() {
+    function togglePass() {
       const input = document.getElementById('vault-pass');
       const eye = document.getElementById('eye-icon');
       if (input.type === 'password') {
@@ -118,12 +102,16 @@
       }
     }
 
+    function applyUnlock() {
+      const lock = document.getElementById('vault-lock');
+      if (lock) lock.style.display = 'none';
+    }
+
     function handleUnlock() {
       const pass = document.getElementById('vault-pass').value;
       if (pass === "Kaarg") {
-        localStorage.setItem('vault_unlocked', 'true');
-        document.getElementById('vault-lock').style.display = 'none';
-        document.body.classList.remove('locked');
+        sessionStorage.setItem('vault_unlocked', 'true');
+        applyUnlock();
       } else {
         document.getElementById('error-msg').style.display = 'block';
         document.getElementById('vault-pass').value = '';
@@ -131,13 +119,28 @@
       }
     }
 
-    if (localStorage.getItem('vault_unlocked') === 'true') {
-      window.onload = function() {
-        document.getElementById('vault-lock').style.display = 'none';
-        document.body.classList.remove('locked');
-      };
+    // Immediate check
+    if (sessionStorage.getItem('vault_unlocked') === 'true') {
+      document.write('<style>#vault-lock { display: none !important; }</style>');
     }
+  </script>
+</head>
+<body>
+  <div id="vault-lock">
+    <div id="lock-form">
+      <h1>Edit the Chronicles</h1>
+      <div class="input-group">
+        <input type="password" id="vault-pass" placeholder="Secret Phrase..." autofocus />
+        <button id="toggle-pass" type="button" onclick="togglePass()">
+          <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        </button>
+      </div>
+      <div id="error-msg">The archives remain sealed. Try again.</div>
+      <button class="submit-btn" type="button" onclick="handleUnlock()">Unseal the Archive</button>
+    </div>
+  </div>
 
+  <script>
     document.getElementById('vault-pass').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') handleUnlock();
     });
