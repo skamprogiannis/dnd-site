@@ -30,11 +30,9 @@
     }
     #lock-form h1 { color: #7b97aa; margin-bottom: 1.5rem; font-size: 1.5rem; }
     
-    .input-group {
+    .input-container {
       position: relative;
       margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
     }
     
     #vault-pass {
@@ -52,6 +50,8 @@
     #toggle-pass {
       position: absolute;
       right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
       cursor: pointer;
       background: none;
       border: none;
@@ -102,24 +102,21 @@
       }
     }
 
-    function applyUnlock() {
-      const lock = document.getElementById('vault-lock');
-      if (lock) lock.style.display = 'none';
-    }
-
-    function handleUnlock() {
+    function unlock() {
       const pass = document.getElementById('vault-pass').value;
       if (pass === "Kaarg") {
         sessionStorage.setItem('vault_unlocked', 'true');
-        applyUnlock();
+        const lock = document.getElementById('vault-lock');
+        if (lock) lock.style.display = 'none';
       } else {
-        document.getElementById('error-msg').style.display = 'block';
+        const err = document.getElementById('error-msg');
+        if (err) err.style.display = 'block';
         document.getElementById('vault-pass').value = '';
         document.getElementById('vault-pass').focus();
       }
     }
 
-    // Immediate check
+    // Check session on load
     if (sessionStorage.getItem('vault_unlocked') === 'true') {
       document.write('<style>#vault-lock { display: none !important; }</style>');
     }
@@ -129,20 +126,20 @@
   <div id="vault-lock">
     <div id="lock-form">
       <h1>Edit the Chronicles</h1>
-      <div class="input-group">
+      <div class="input-container">
         <input type="password" id="vault-pass" placeholder="Secret Phrase..." autofocus />
         <button id="toggle-pass" type="button" onclick="togglePass()">
           <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
         </button>
       </div>
       <div id="error-msg">The archives remain sealed. Try again.</div>
-      <button class="submit-btn" type="button" onclick="handleUnlock()">Unseal the Archive</button>
+      <button class="submit-btn" type="button" onclick="unlock()">Unseal the Archive</button>
     </div>
   </div>
 
   <script>
     document.getElementById('vault-pass').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') handleUnlock();
+      if (e.key === 'Enter') unlock();
     });
   </script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>

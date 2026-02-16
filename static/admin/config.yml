@@ -3,7 +3,7 @@ backend:
   repo: skamprogiannis/dnd-site
   branch: main
   base_url: https://decap-proxy-eight.vercel.app
-  auth_endpoint: auth
+  auth_endpoint: api/auth
 
 media_folder: "content/assets/images"
 public_folder: "assets/images"
@@ -19,7 +19,7 @@ collections:
     extension: "md"
     format: "frontmatter"
     create: true
-    slug: "{{slug}}/index"
+    slug: "{{title}}"
     identifier_field: "title"
     fields:
       - {label: "Title", name: "title", widget: "string"}
@@ -34,7 +34,7 @@ collections:
     extension: "md"
     format: "frontmatter"
     create: true
-    slug: "{{slug}}/index"
+    slug: "{{title}}"
     identifier_field: "title"
     fields:
       - {label: "Name", name: "title", widget: "string"}
@@ -45,7 +45,7 @@ collections:
   - name: "lore"
     label: "Lore"
     label_singular: "Lore Entry"
-    folder: "content/lore"
+    folder: "content/Lore"
     extension: "md"
     format: "frontmatter"
     create: true
@@ -59,7 +59,7 @@ collections:
   - name: "backgrounds"
     label: "Custom Backgrounds"
     label_singular: "Custom Background"
-    folder: "content/custom-backgrounds"
+    folder: "content/Custom Backgrounds"
     extension: "md"
     format: "frontmatter"
     create: true
