@@ -11,8 +11,8 @@ A digital archive of our D&D campaigns, legends, and characters.
 ## How to Edit
 
 1. Visit the [Admin Panel](https://dnd.caravanserai.gr/static/admin/).
-2. Enter the secret phrase (`Kraag`).
-3. Log in with your GitHub account (or email if invited via Netlify Identity).
+2. Enter the secret phrase.
+3. Log in with your GitHub account (or Google/email as configured).
 4. Save your changes to update the live site.
 
 ## Infrastructure Setup (Netlify)
@@ -30,9 +30,10 @@ To point `dnd.caravanserai.gr` to this site:
 
 ### 2. Identity & CMS Settings
 
-- **Enable Identity**: Go to `Site configuration > Identity` and click **Enable Identity**.
-- **Registration**: Set to **Invite only** under `Settings > Identity > Registration`.
-- **Enable Git Gateway**: Go to `Settings > Identity > Services` and click **Enable Git Gateway**.
+- **Enable Identity**: Done.
+- **Registration**: Currently set to **Open** (with GitHub/Google support).
+- **Enable Git Gateway**: Go to `Settings > Identity > Services` and click **Enable Git Gateway**. This connects the CMS to the GitHub API.
+
 - **Netlify Identity Widget**: This is already integrated into the site's code to handle login redirects.
 
 ## Tech Stack

@@ -4,33 +4,32 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager | Chronicles of Lemuria</title>
-  <!-- Load Identity Widget first -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   <style>
-    body {
+    /* Full-screen Vault Overlay */
+    #vault-lock {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
       background-color: #161618;
-      color: #ebebec;
-      font-family: system-ui, -apple-system, sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      margin: 0;
+      z-index: 9999;
+      font-family: system-ui, -apple-system, sans-serif;
     }
-    #login-container {
-      width: 100%;
-      max-width: 400px;
-    }
-    #login-form {
+    #lock-form {
       background: #1a1a20;
       padding: 2.5rem;
       border-radius: 8px;
       border: 1px solid #393639;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      width: 100%;
+      max-width: 350px;
     }
-    h1 { color: #7b97aa; margin-bottom: 1.5rem; font-size: 1.5rem; }
-    input {
+    #lock-form h1 { color: #7b97aa; margin-bottom: 1.5rem; font-size: 1.5rem; }
+    #lock-form input {
       background: #161618;
       border: 1px solid #393639;
       color: #ebebec;
@@ -41,11 +40,7 @@
       margin-bottom: 1.5rem;
       font-size: 1rem;
     }
-    input:focus {
-      outline: none;
-      border-color: #7b97aa;
-    }
-    button {
+    #lock-form button {
       background: #7b97aa;
       color: #161618;
       border: none;
@@ -54,67 +49,52 @@
       cursor: pointer;
       font-weight: bold;
       width: 100%;
-      font-size: 1rem;
       transition: background 0.2s;
     }
-    button:hover { background: #9eb2c0; }
-    
-    /* Decap CMS Visibility Overrides */
-    #nc-root * {
-      color: #161618 !important;
-    }
+    #lock-form button:hover { background: #9eb2c0; }
+
+    /* Decap CMS Visibility Fixes */
+    /* Target inputs and text specifically to avoid conflicts with buttons */
     #nc-root input, 
-    #nc-root textarea, 
-    #nc-root [class*="ControlPane"],
-    #nc-root [class*="EditorControl"],
+    #nc-root textarea,
+    #nc-root [class*="ControlPane"] {
+      color: #111 !important;
+      background-color: #fff !important;
+    }
+    
+    /* Fix login screen labels and fields */
+    #nc-root [class*="Login"] label,
     #nc-root [class*="Login"] input {
-      color: #161618 !important;
-      background-color: #ffffff !important;
-      border: 1px solid #ccc !important;
-    }
-    #nc-root button {
-      color: #ffffff !important;
-    }
-    #nc-root [class*="AppHeader"] * {
-      color: #ffffff !important;
+      color: #111 !important;
     }
   </style>
 </head>
 <body>
-  <div id="login-container">
-    <div id="login-form">
+  <div id="vault-lock">
+    <div id="lock-form">
       <h1>Chronicles Admin</h1>
-      <input type="password" id="password" placeholder="Enter Secret Phrase..." autofocus />
-      <button onclick="checkPassword()">Unlock Vault</button>
+      <input type="password" id="vault-pass" placeholder="Enter Secret Phrase..." autofocus />
+      <button onclick="unlockVault()">Unlock Vault</button>
     </div>
   </div>
 
   <script>
-    function loadCMS() {
-      const script = document.createElement('script');
-      script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
-      document.body.appendChild(script);
-    }
-
-    function checkPassword() {
-      const pass = document.getElementById('password').value;
-      if (pass === "Kraag") {
+    function unlockVault() {
+      const pass = document.getElementById('vault-pass').value;
+      if (pass === "Kaarg") {
         localStorage.setItem('vault_unlocked', 'true');
-        document.getElementById('login-container').style.display = 'none';
-        loadCMS();
+        document.getElementById('vault-lock').style.display = 'none';
       } else {
         alert("The vault remains sealed.");
       }
     }
 
-    // Check if already unlocked in this session
     if (localStorage.getItem('vault_unlocked') === 'true') {
-      document.getElementById('login-container').style.display = 'none';
-      loadCMS();
+      document.getElementById('vault-lock').style.display = 'none';
     }
 
-    document.getElementById('password').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') checkPassword();
+    document.getElementById('vault-pass').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') unlockVault();
     });
   </script>
 </body>
