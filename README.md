@@ -15,17 +15,32 @@ A digital archive of our D&D campaigns, legends, and characters.
 3. Log in with your GitHub account (or email if invited via Netlify Identity).
 4. Save your changes to update the live site.
 
-## Setup Instructions (Netlify)
+## Infrastructure Setup (Netlify)
 
-1. **Enable Identity**: In Netlify, go to `Site configuration > Identity` and click **Enable Identity**.
-2. **Registration**: Set to **Invite only** to keep the site private.
-3. **Services**: Scroll down to `Services > Git Gateway` and click **Enable Git Gateway**.
-4. **Custom Domain**:
-   - Add `dnd.caravanserai.gr` in Netlify under `Domain management`.
-   - Update your DNS provider (e.g., Cloudflare, GoDaddy) to point the CNAME record for `dnd` to your Netlify site URL (`chronicles-of-lemuria.netlify.app`).
+The site is hosted on **Netlify** and uses **Netlify Identity** for authentication.
+
+### 1. Domain Configuration
+
+To point `dnd.caravanserai.gr` to this site:
+
+- **CNAME Record**: `dnd` -> `chronicles-of-lemuria.netlify.app`
+- **TXT Record (Verification)**:
+  - **Host**: `subdomain-owner-verification`
+  - **Value**: `d3a8c538f99fdbbc4e42267f70c0e67`
+
+### 2. Identity & CMS Settings
+
+- **Enable Identity**: Go to `Site configuration > Identity` and click **Enable Identity**.
+- **Registration**: Set to **Invite only** under `Settings > Identity > Registration`.
+- **Enable Git Gateway**: Go to `Settings > Identity > Services` and click **Enable Git Gateway**.
+- **Netlify Identity Widget**: This is already integrated into the site's code to handle login redirects.
 
 ## Tech Stack
 
 - **Engine**: [Quartz v4](https://quartz.jzhao.xyz/)
 - **Hosting**: [Netlify](https://www.netlify.com/)
 - **Editor**: [Decap CMS](https://decapcms.org/)
+
+## License
+
+AGPL-3.0
