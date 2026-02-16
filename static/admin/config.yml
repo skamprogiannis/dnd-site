@@ -1,0 +1,71 @@
+backend:
+  name: github
+  repo: skamprogiannis/dnd-site
+  branch: main
+  base_url: https://decap-cms-oauth-skamprogiannis.vercel.app # Placeholder - you will update this
+  auth_endpoint: auth
+
+media_folder: "content/assets/images"
+public_folder: "assets/images"
+
+site_url: "https://dnd.caravanserai.gr"
+display_url: "https://dnd.caravanserai.gr"
+
+collections:
+  - name: "characters"
+    label: "Characters"
+    label_singular: "Character"
+    folder: "content/Characters"
+    extension: "md"
+    format: "frontmatter"
+    create: true
+    slug: "{{title}}"
+    identifier_field: "title"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Character Sheet (JSON)", name: "sheet", widget: "file", required: false}
+      - {label: "Tags", name: "tags", widget: "list"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "npcs"
+    label: "NPCs"
+    label_singular: "NPC"
+    folder: "content/NPCs"
+    extension: "md"
+    format: "frontmatter"
+    create: true
+    slug: "{{title}}"
+    identifier_field: "title"
+    fields:
+      - {label: "Name", name: "title", widget: "string"}
+      - {label: "Race", name: "race", widget: "string"}
+      - {label: "Tags", name: "tags", widget: "list"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "lore"
+    label: "Lore"
+    label_singular: "Lore Entry"
+    folder: "content/Lore"
+    extension: "md"
+    format: "frontmatter"
+    create: true
+    slug: "{{title}}"
+    identifier_field: "title"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Tags", name: "tags", widget: "list"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "backgrounds"
+    label: "Custom Backgrounds"
+    label_singular: "Custom Background"
+    folder: "content/Custom Backgrounds"
+    extension: "md"
+    format: "frontmatter"
+    create: true
+    slug: "{{title}}"
+    identifier_field: "title"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Tags", name: "tags", widget: "list"}
+      - {label: "Body", name: "body", widget: "markdown"}
