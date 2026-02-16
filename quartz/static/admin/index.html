@@ -6,7 +6,7 @@
   <title>Content Manager | Chronicles of Lemuria</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
-    /* Vault Lock Styling */
+    /* Clean Vault Lock */
     #vault-lock {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -19,121 +19,39 @@
     }
     #lock-form {
       background: #1a1a20;
-      padding: 2.5rem;
+      padding: 2rem;
       border-radius: 8px;
       border: 1px solid #393639;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       width: 100%;
-      max-width: 350px;
+      max-width: 320px;
     }
-    #lock-form h1 { color: #7b97aa; margin-bottom: 1.5rem; font-size: 1.5rem; }
+    #lock-form h1 { color: #7b97aa; margin-bottom: 1rem; font-size: 1.2rem; }
     #lock-form input {
       background: #161618;
       border: 1px solid #393639;
       color: #ebebec;
-      padding: 0.8rem;
+      padding: 0.6rem;
       border-radius: 4px;
       width: 100%;
       box-sizing: border-box;
       margin-bottom: 1rem;
-      font-size: 1rem;
     }
-    #error-msg {
-      color: #e94560;
-      font-size: 0.8rem;
-      margin-bottom: 1rem;
-      display: none;
-    }
+    #error-msg { color: #ff5555; font-size: 0.8rem; margin-bottom: 1rem; display: none; }
     #lock-form button {
       background: #7b97aa;
       color: #161618;
       border: none;
-      padding: 0.8rem 2rem;
+      padding: 0.6rem 1.5rem;
       border-radius: 4px;
       cursor: pointer;
       font-weight: bold;
       width: 100%;
-      transition: background 0.2s;
     }
-    #lock-form button:hover { background: #9eb2c0; }
-
-    /* Decap CMS Dark Theme Overrides */
-    body { background-color: #161618; }
     
-    /* Target the root of Decap */
+    /* Decap CMS Minimal Overrides - ensuring it stays in its default light theme */
     #nc-root {
-      background-color: #161618 !important;
-    }
-
-    /* General text visibility */
-    #nc-root * {
-      color: #ebebec !important;
-    }
-
-    /* Main Container & Sidebar */
-    #nc-root div[class*="AppContainer"],
-    #nc-root aside {
-      background-color: #161618 !important;
-    }
-
-    /* Cards and List Items */
-    #nc-root div[class*="Card"],
-    #nc-root div[class*="CollectionListCard"],
-    #nc-root a[class*="CollectionListCard"] {
-      background-color: #1a1a20 !important;
-      border: 1px solid #393639 !important;
-    }
-
-    /* Inputs, Textareas, and Editor Panes */
-    #nc-root input, 
-    #nc-root textarea,
-    #nc-root [class*="ControlPane"],
-    #nc-root [class*="EditorControl"],
-    #nc-root [class*="FieldControl"] {
-      background-color: #161618 !important;
-      color: #ebebec !important;
-      border: 1px solid #393639 !important;
-    }
-
-    /* Buttons - keep them visible but accessible */
-    #nc-root button {
-      background-color: #7b97aa !important;
-      color: #161618 !important;
-    }
-    #nc-root button * {
-      color: #161618 !important;
-    }
-
-    /* Fix for Quick Add dropdown and other menus */
-    #nc-root [class*="Dropdown"],
-    #nc-root [class*="Menu"],
-    #nc-root [class*="Popover"] {
-      background-color: #1a1a20 !important;
-      border: 1px solid #393639 !important;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
-    }
-    
-    /* Fix for list header and sidebar headings */
-    #nc-root h1, #nc-root h2, #nc-root h3 {
-      color: #7b97aa !important;
-    }
-
-    /* Active sidebar item */
-    #nc-root a[class*="SidebarLinkActive"] {
-      background-color: #393639 !important;
-      border-left: 4px solid #7b97aa !important;
-    }
-
-    /* Fix Login Screen inside Decap */
-    #nc-root div[class*="Login"] {
-      background-color: #161618 !important;
-    }
-    
-    /* Netlify Identity Widget Overrides (if needed) */
-    .netlify-identity-menu {
-      background-color: #1a1a20 !important;
-      color: #ebebec !important;
+      background-color: #fff !important;
     }
   </style>
 </head>
@@ -141,8 +59,8 @@
   <div id="vault-lock">
     <div id="lock-form">
       <h1>Chronicles Admin</h1>
-      <input type="password" id="vault-pass" placeholder="Enter Secret Phrase..." autofocus />
-      <div id="error-msg">The vault remains sealed. Try again.</div>
+      <input type="password" id="vault-pass" placeholder="Secret Phrase..." autofocus />
+      <div id="error-msg">Incorrect phrase.</div>
       <button onclick="unlockVault()">Unlock Vault</button>
     </div>
   </div>
@@ -167,6 +85,7 @@
       if (e.key === 'Enter') unlockVault();
     });
   </script>
+  <!-- Load Decap normally -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>

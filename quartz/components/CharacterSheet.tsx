@@ -8,11 +8,14 @@ const CharacterSheet: QuartzComponent = ({ fileData, displayClass, cfg }: Quartz
     return null
   }
 
+  // Extract filename for the download attribute
+  const fileName = sheetPath.split("/").pop() || "character.json"
+
   return (
     <div class={classNames(displayClass, "character-sheet")}>
       <a
         href={`/${sheetPath}`}
-        download
+        download={fileName}
         style={{
           display: "inline-block",
           padding: "0.5rem 1rem",
