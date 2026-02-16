@@ -5,6 +5,7 @@ tags:
   - ranger
   - westgate
   - dhampir
+sheet: Characters/Lucian/lucian.json
 ---
 
 ![[lucian.png]]
@@ -83,7 +84,7 @@ Isovold’s fascination with him is rooted in her own boredom. To her, Lucian is
 
 His motivation is a cold, focused fire. He hunts Isovold for revenge, yes, but also for a glimmer of hope. He has found cryptic mentions in Inquisitorial texts of the _[[The Blood of the creator|The Blood of the creator]]_, the theory that if a Dhampir slays the one who turned them and consumes their essence, the curse might be burned away.
 
-In this ghost-life, his only confidante is **[[../../NPCs/Father Davor|Father Davor]]**, a priest of **[Ilmater](https://forgottenrealms.fandom.com/wiki/Ilmater)** in a crumbling Westgate chapel. Davor sees the "half-life" Lucian leads as a form of sacred endurance. He provides Lucian with a sanctuary to meditate and fight off the hunger, reminding him that while his blood is cursed, he still has a role to play in this life. Lucian no longer seeks "Justice” in the traditional sense.
+In this ghost-life, his only confidante is **[[../../NPCs/Father Davor|Father Davor]]**, a priest of Ilmater in a crumbling Westgate chapel. Davor sees the "half-life" Lucian leads as a form of sacred endurance. He provides Lucian with a sanctuary to meditate and fight off the hunger, reminding him that while his blood is cursed, he still has a role to play in this life. Lucian no longer seeks "Justice” in the traditional sense.
 
 He carries his **Heavy Crossbow** for the opening shot, a silver-edged **Shortsword** for the work, and a **Dagger** for the finish. He doesn't see himself as a knight anymore. He is a verdict. He is the thing that makes vampires check the shadows behind them. He walks the line between man and monster, the silver badge of the Gauntlet hidden against his pale chest, channeling the magic of the wild into the justice of the dead.
 

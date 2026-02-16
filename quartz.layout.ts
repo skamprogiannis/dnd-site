@@ -75,6 +75,7 @@ export const defaultContentPageLayout: PageLayout = {
       },
     }),
     Component.DesktopOnly(Component.TableOfContents()),
+    Component.CharacterSheet(),
     Component.Backlinks(),
   ],
   right: [
@@ -95,6 +96,7 @@ export const defaultContentPageLayout: PageLayout = {
       },
     }),
     Component.DesktopOnly(Component.TableOfContents()),
+    Component.CharacterSheet(),
     Component.Backlinks(),
   ],
 }
@@ -168,6 +170,7 @@ export const defaultListPageLayout: PageLayout = {
       },
     }),
     Component.DesktopOnly(Component.TableOfContents()),
+    Component.CharacterSheet(),
     Component.Backlinks(),
   ],
 }

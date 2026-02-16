@@ -16,6 +16,7 @@ collections:
     slug: "{{title}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
+      - {label: "Character Sheet (JSON)", name: "sheet", widget: "file", required: false}
       - {label: "Tags", name: "tags", widget: "list"}
       - {label: "Body", name: "body", widget: "markdown"}
 
@@ -25,7 +26,7 @@ collections:
     create: true
     slug: "{{title}}"
     fields:
-      - {label: "Name", name: "name", widget: "string"}
+      - {label: "Name", name: "title", widget: "string"}
       - {label: "Race", name: "race", widget: "string"}
       - {label: "Tags", name: "tags", widget: "list"}
       - {label: "Body", name: "body", widget: "markdown"}

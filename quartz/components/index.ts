@@ -24,8 +24,11 @@ import Comments from "./Comments"
 import Flex from "./Flex"
 import ConditionalRender from "./ConditionalRender"
 
+import CharacterSheet from "./CharacterSheet"
+
 export {
   ArticleTitle,
+  CharacterSheet,
   Content,
   TagContent,
   FolderContent,
