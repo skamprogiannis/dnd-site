@@ -7,7 +7,7 @@
   <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
-    /* Clean Vault Lock */
+    /* Full-screen Vault Overlay */
     #vault-lock {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -33,14 +33,16 @@
     .input-group {
       position: relative;
       margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
     }
     
-    #lock-form input {
+    #vault-pass {
       background: #161618;
       border: 1px solid #393639;
       color: #ebebec;
       padding: 0.8rem;
-      padding-right: 2.5rem;
+      padding-right: 3rem;
       border-radius: 4px;
       width: 100%;
       box-sizing: border-box;
@@ -50,15 +52,14 @@
     #toggle-pass {
       position: absolute;
       right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
       cursor: pointer;
       background: none;
       border: none;
       color: #7b97aa;
-      padding: 0;
+      padding: 5px;
       display: flex;
       align-items: center;
+      justify-content: center;
     }
 
     #error-msg {
@@ -69,7 +70,7 @@
       font-weight: bold;
     }
     
-    #lock-form button.submit {
+    button.submit-btn {
       background: #7b97aa;
       color: #161618;
       border: none;
@@ -81,7 +82,7 @@
       font-size: 1rem;
       transition: background 0.2s;
     }
-    #lock-form button.submit:hover { background: #9eb2c0; }
+    button.submit-btn:hover { background: #9eb2c0; }
 
     /* Decap CMS Minimal Overrides */
     #nc-root {
@@ -95,23 +96,31 @@
       <h1>Edit the Chronicles</h1>
       <div class="input-group">
         <input type="password" id="vault-pass" placeholder="Secret Phrase..." autofocus />
-        <button id="toggle-pass" onclick="toggleVisibility()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        <button id="toggle-pass" type="button" onclick="togglePassVisibility()">
+          <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
         </button>
       </div>
       <div id="error-msg">The archives remain sealed. Try again.</div>
-      <button class="submit" onclick="unlockVault()">Unseal the Archive</button>
+      <button class="submit-btn" type="button" onclick="handleUnlock()">Unseal the Archive</button>
     </div>
   </div>
 
   <script>
-    function toggleVisibility() {
+    function togglePassVisibility() {
       const input = document.getElementById('vault-pass');
-      const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-      input.setAttribute('type', type);
+      const eye = document.getElementById('eye-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        // Change icon to eye-off
+        eye.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+      } else {
+        input.type = 'password';
+        // Change icon back to eye
+        eye.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+      }
     }
 
-    function loadCMS() {
+    function loadDecap() {
       if (window.CMS_LOADED) return;
       window.CMS_LOADED = true;
       const script = document.createElement('script');
@@ -119,12 +128,12 @@
       document.body.appendChild(script);
     }
 
-    function unlockVault() {
+    function handleUnlock() {
       const pass = document.getElementById('vault-pass').value;
       if (pass === "Kaarg") {
         localStorage.setItem('vault_unlocked', 'true');
         document.getElementById('vault-lock').style.display = 'none';
-        loadCMS();
+        loadDecap();
       } else {
         const error = document.getElementById('error-msg');
         error.style.display = 'block';
@@ -133,14 +142,13 @@
       }
     }
 
-    // Check if already unlocked in this session
     if (localStorage.getItem('vault_unlocked') === 'true') {
       document.getElementById('vault-lock').style.display = 'none';
-      loadCMS();
+      loadDecap();
     }
 
     document.getElementById('vault-pass').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') unlockVault();
+      if (e.key === 'Enter') handleUnlock();
     });
   </script>
 </body>

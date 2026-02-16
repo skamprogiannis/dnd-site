@@ -49,7 +49,7 @@ export const defaultContentPageLayout: PageLayout = {
           node.displayName = "NPCs"
         } else if (lowerName === "characters") {
           node.displayName = "Characters"
-        } else if (node.name === "Lucian" && !node.file) {
+        } else if (node.slugSegment === "Lucian" && node.isFolder) {
           node.displayName = "Lucian, the Pale Inquisitor"
         } else {
           node.displayName = node.displayName
@@ -57,26 +57,13 @@ export const defaultContentPageLayout: PageLayout = {
             .replace(/_/g, " ")
             .replace(/\b\w/g, (c) => c.toUpperCase())
         }
-        return node
       },
       filterFn: (node) => {
-        // Hide sub-pages completely
-        const toHide = [
-          "Luthcheq Witch Hunter",
-          "The Blood of the creator",
-          "The Blood Of The Creator",
-          "Luthcheq-Witch-Hunter",
-          "The-Blood-of-the-creator",
-        ]
-        if (toHide.includes(node.name)) {
-          return false
-        }
-        return true
+        // Hide internal lore and background folders/pages from the sidebar
+        const toHide = ["Lore", "Custom Backgrounds", "Lucian"]
+        return !toHide.includes(node.slugSegment) && !toHide.includes(node.displayName)
       },
     }),
-    Component.DesktopOnly(Component.TableOfContents()),
-    Component.CharacterSheet(),
-    Component.Backlinks(),
   ],
   right: [
     Component.Graph({
@@ -127,7 +114,7 @@ export const defaultListPageLayout: PageLayout = {
           node.displayName = "NPCs"
         } else if (lowerName === "characters") {
           node.displayName = "Characters"
-        } else if (node.name === "Lucian" && !node.file) {
+        } else if (node.slugSegment === "Lucian" && node.isFolder) {
           node.displayName = "Lucian, the Pale Inquisitor"
         } else {
           node.displayName = node.displayName
@@ -135,20 +122,10 @@ export const defaultListPageLayout: PageLayout = {
             .replace(/_/g, " ")
             .replace(/\b\w/g, (c) => c.toUpperCase())
         }
-        return node
       },
       filterFn: (node) => {
-        const toHide = [
-          "Luthcheq Witch Hunter",
-          "The Blood of the creator",
-          "The Blood Of The Creator",
-          "Luthcheq-Witch-Hunter",
-          "The-Blood-of-the-creator",
-        ]
-        if (toHide.includes(node.name)) {
-          return false
-        }
-        return true
+        const toHide = ["Lore", "Custom Backgrounds", "Lucian"]
+        return !toHide.includes(node.slugSegment) && !toHide.includes(node.displayName)
       },
     }),
   ],

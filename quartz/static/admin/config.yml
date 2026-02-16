@@ -38,3 +38,31 @@ collections:
       - {label: "Race", name: "race", widget: "string"}
       - {label: "Tags", name: "tags", widget: "list"}
       - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "lore"
+    label: "Lore"
+    label_singular: "Lore Entry"
+    folder: "content/Lore"
+    extension: "md"
+    format: "frontmatter"
+    create: true
+    slug: "{{title}}"
+    identifier_field: "title"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Tags", name: "tags", widget: "list"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "backgrounds"
+    label: "Custom Backgrounds"
+    label_singular: "Custom Background"
+    folder: "content/Custom Backgrounds"
+    extension: "md"
+    format: "frontmatter"
+    create: true
+    slug: "{{title}}"
+    identifier_field: "title"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Tags", name: "tags", widget: "list"}
+      - {label: "Body", name: "body", widget: "markdown"}
