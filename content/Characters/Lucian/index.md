@@ -8,7 +8,7 @@ tags:
 sheet: Characters/Lucian/lucian.json
 ---
 
-![[lucian.png]]
+![[Characters/Lucian/images/lucian.png]]
 
 ## Summary
 
@@ -75,7 +75,7 @@ He woke up changed. He wasn't the mindless thrall Isovold expected. His Chessant
 
 ### Half-life
 
-![[lucian_shadows.png]]
+![[Characters/Lucian/images/lucian_shadows.png]]
 He carries a shattered badge of the Order of the Gauntlet in his pocket, a reminder of the man he used to be. Every time he looks in a mirror and sees his white-rooted hair and bloodless skin, his resolve hardens. He is a weapon forged in the dark, and he will not stop until the Night Masks are ash. Lucian now prays to **Assuran**, the Chessentan name of Hoar, the Doombringer. Tyr’s justice was for the living; Assuran’s retribution was for the dead.
 
 He transitioned from a holy investigator to a "contract specialist" in the North. He operates out of the damp alleys of Neverwinter, Waterdeep and Westgate, taking the cases the City Watch ignores. He is a predator of the dark, using the very curse Isovold gave him to climb walls and see through the shadows of the underworld.
@@ -84,7 +84,7 @@ Isovold’s fascination with him is rooted in her own boredom. To her, Lucian is
 
 His motivation is a cold, focused fire. He hunts Isovold for revenge, yes, but also for a glimmer of hope. He has found cryptic mentions in Inquisitorial texts of the _[[The Blood of the creator|The Blood of the creator]]_, the theory that if a Dhampir slays the one who turned them and consumes their essence, the curse might be burned away.
 
-In this ghost-life, his only confidante is **[[../../NPCs/Father Davor|Father Davor]]**, a priest of Ilmater in a crumbling Westgate chapel. Davor sees the "half-life" Lucian leads as a form of sacred endurance. He provides Lucian with a sanctuary to meditate and fight off the hunger, reminding him that while his blood is cursed, he still has a role to play in this life. Lucian no longer seeks "Justice” in the traditional sense.
+In this ghost-life, his only confidante is **[[../../NPCs/Father Davor|Father Davor]]**, a priest of Ilmater in a crumbling Westgate chapel. Davor sees the "half-life" Lucian leads as a form of sacred endurance. He provides Lucian with a sanctuary to meditate and fight off the hunger, reminding him that while his blood is cursed, his soul still answers to [Assuran](https://forgottenrealms.fandom.com/wiki/Hoar) (the Chessantan name for Hoar). Lucian no longer seeks "Justice” in the traditional sense.
 
 He carries his **Heavy Crossbow** for the opening shot, a silver-edged **Shortsword** for the work, and a **Dagger** for the finish. He doesn't see himself as a knight anymore. He is a verdict. He is the thing that makes vampires check the shadows behind them. He walks the line between man and monster, the silver badge of the Gauntlet hidden against his pale chest, channeling the magic of the wild into the justice of the dead.
 

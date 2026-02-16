@@ -36,8 +36,14 @@
       border-radius: 4px;
       width: 100%;
       box-sizing: border-box;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       font-size: 1rem;
+    }
+    #error-msg {
+      color: #e94560;
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+      display: none;
     }
     #lock-form button {
       background: #7b97aa;
@@ -52,26 +58,82 @@
     }
     #lock-form button:hover { background: #9eb2c0; }
 
-    /* Decap CMS Visibility Fixes */
+    /* Decap CMS Dark Theme Overrides */
+    body { background-color: #161618; }
+    
+    /* Target the root of Decap */
     #nc-root {
-      background-color: #f0f2f5 !important;
+      background-color: #161618 !important;
     }
+
+    /* General text visibility */
     #nc-root * {
-      color: #333 !important;
+      color: #ebebec !important;
     }
+
+    /* Main Container & Sidebar */
+    #nc-root div[class*="AppContainer"],
+    #nc-root aside {
+      background-color: #161618 !important;
+    }
+
+    /* Cards and List Items */
+    #nc-root div[class*="Card"],
+    #nc-root div[class*="CollectionListCard"],
+    #nc-root a[class*="CollectionListCard"] {
+      background-color: #1a1a20 !important;
+      border: 1px solid #393639 !important;
+    }
+
+    /* Inputs, Textareas, and Editor Panes */
     #nc-root input, 
     #nc-root textarea,
     #nc-root [class*="ControlPane"],
-    #nc-root [class*="EditorControl"] {
-      background-color: #fff !important;
-      color: #000 !important;
-      border: 1px solid #ccc !important;
+    #nc-root [class*="EditorControl"],
+    #nc-root [class*="FieldControl"] {
+      background-color: #161618 !important;
+      color: #ebebec !important;
+      border: 1px solid #393639 !important;
     }
-    #nc-root button *, #nc-root button {
-      color: #fff !important;
+
+    /* Buttons - keep them visible but accessible */
+    #nc-root button {
+      background-color: #7b97aa !important;
+      color: #161618 !important;
     }
-    #nc-root header * {
-      color: #fff !important;
+    #nc-root button * {
+      color: #161618 !important;
+    }
+
+    /* Fix for Quick Add dropdown and other menus */
+    #nc-root [class*="Dropdown"],
+    #nc-root [class*="Menu"],
+    #nc-root [class*="Popover"] {
+      background-color: #1a1a20 !important;
+      border: 1px solid #393639 !important;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+    }
+    
+    /* Fix for list header and sidebar headings */
+    #nc-root h1, #nc-root h2, #nc-root h3 {
+      color: #7b97aa !important;
+    }
+
+    /* Active sidebar item */
+    #nc-root a[class*="SidebarLinkActive"] {
+      background-color: #393639 !important;
+      border-left: 4px solid #7b97aa !important;
+    }
+
+    /* Fix Login Screen inside Decap */
+    #nc-root div[class*="Login"] {
+      background-color: #161618 !important;
+    }
+    
+    /* Netlify Identity Widget Overrides (if needed) */
+    .netlify-identity-menu {
+      background-color: #1a1a20 !important;
+      color: #ebebec !important;
     }
   </style>
 </head>
@@ -80,6 +142,7 @@
     <div id="lock-form">
       <h1>Chronicles Admin</h1>
       <input type="password" id="vault-pass" placeholder="Enter Secret Phrase..." autofocus />
+      <div id="error-msg">The vault remains sealed. Try again.</div>
       <button onclick="unlockVault()">Unlock Vault</button>
     </div>
   </div>
@@ -91,7 +154,8 @@
         localStorage.setItem('vault_unlocked', 'true');
         document.getElementById('vault-lock').style.display = 'none';
       } else {
-        alert("The vault remains sealed.");
+        document.getElementById('error-msg').style.display = 'block';
+        document.getElementById('vault-pass').value = '';
       }
     }
 
