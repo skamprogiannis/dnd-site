@@ -19,7 +19,7 @@ collections:
     extension: "md"
     format: "frontmatter"
     create: true
-    slug: "{{title}}"
+    slug: "{{slug}}"
     identifier_field: "title"
     fields:
       - {label: "Title", name: "title", widget: "string"}
@@ -34,7 +34,7 @@ collections:
     extension: "md"
     format: "frontmatter"
     create: true
-    slug: "{{title}}"
+    slug: "{{slug}}"
     identifier_field: "title"
     fields:
       - {label: "Name", name: "title", widget: "string"}
@@ -49,7 +49,7 @@ collections:
     extension: "md"
     format: "frontmatter"
     create: true
-    slug: "{{title}}"
+    slug: "{{slug}}"
     identifier_field: "title"
     fields:
       - {label: "Title", name: "title", widget: "string"}
@@ -63,7 +63,7 @@ collections:
     extension: "md"
     format: "frontmatter"
     create: true
-    slug: "{{title}}"
+    slug: "{{slug}}"
     identifier_field: "title"
     fields:
       - {label: "Title", name: "title", widget: "string"}
