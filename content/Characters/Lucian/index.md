@@ -7,7 +7,7 @@ tags:
   - dhampir
 ---
 
-![[lucian.png]]
+![[images/lucian.png]]
 
 ## Summary
 
@@ -74,7 +74,7 @@ He woke up changed. He wasn't the mindless thrall Isovold expected. His Chessant
 
 ### Half-life
 
-![[lucian_shadows.png]]
+![[images/lucian_shadows.png]]
 He carries a shattered badge of the Order of the Gauntlet in his pocket, a reminder of the man he used to be. Every time he looks in a mirror and sees his white-rooted hair and bloodless skin, his resolve hardens. He is a weapon forged in the dark, and he will not stop until the Night Masks are ash. Lucian now prays to **Assuran**, the Chessentan name of Hoar, the Doombringer. Tyr’s justice was for the living; Assuran’s retribution was for the dead.
 
 He transitioned from a holy investigator to a "contract specialist" in the North. He operates out of the damp alleys of Neverwinter, Waterdeep and Westgate, taking the cases the City Watch ignores. He is a predator of the dark, using the very curse Isovold gave him to climb walls and see through the shadows of the underworld.
