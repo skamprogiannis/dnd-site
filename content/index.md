@@ -2,7 +2,7 @@
 title: Welcome to the Chronicles
 ---
 
-# D&D Characters
+# Chronicles of Lemuria
 
 Welcome to the digital archive of our D&D campaigns. Here you will find the legends, lore, and statistics of our heroes.
 

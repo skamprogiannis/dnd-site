@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Content Manager | Chronicles</title>
+  <title>Content Manager | Chronicles of Lemuria</title>
   <style>
     body {
       background-color: #161618;
@@ -57,26 +57,24 @@
     }
     button:hover { background: #9eb2c0; }
     
-    /* Decap CMS Visibility Overrides */
-    /* Target all inputs and text areas inside the CMS once it loads */
+    /* Decap CMS Visibility Overrides - Aggressive */
+    #nc-root * {
+      color: #161618 !important; /* Force dark text everywhere in CMS */
+    }
     #nc-root input, 
     #nc-root textarea, 
     #nc-root [class*="ControlPane"],
-    #nc-root [class*="EditorControl"] {
-      color: #333 !important;
-      background-color: #fff !important;
+    #nc-root [class*="EditorControl"],
+    #nc-root [class*="Login"] input {
+      color: #161618 !important;
+      background-color: #ffffff !important;
+      border: 1px solid #ccc !important;
     }
-    #nc-root label {
-      color: #333 !important;
+    #nc-root button {
+      color: #ffffff !important;
     }
-    /* Login screen specifically */
-    #nc-root div[class*="Login"] {
-      background-color: #f0f2f5 !important;
-    }
-    #nc-root div[class*="Login"] input {
-      color: #333 !important;
-      background-color: #fff !important;
-      border: 1px solid #ddd !important;
+    #nc-root [class*="AppHeader"] * {
+      color: #ffffff !important;
     }
   </style>
 </head>

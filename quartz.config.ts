@@ -8,7 +8,7 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "D&D Characters",
+    pageTitle: "Chronicles of Lemuria",
     pageTitleSuffix: "",
     enableSPA: true,
     enablePopovers: true,

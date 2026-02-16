@@ -1,4 +1,4 @@
-# Chronicles of the Dragon Coast
+# Chronicles of Lemuria
 
 A digital archive of our D&D campaigns, legends, and characters.
 
@@ -20,7 +20,3 @@ A digital archive of our D&D campaigns, legends, and characters.
 - **Engine**: [Quartz v4](https://quartz.jzhao.xyz/)
 - **Hosting**: GitHub Pages
 - **Editor**: [Decap CMS](https://decapcms.org/)
-
-## License
-
-AGPL-3.0
