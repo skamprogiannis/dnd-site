@@ -3,18 +3,74 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Content Manager</title>
-  <script>
-    var pass = prompt("Enter Password to access the Editor:");
-    if (pass !== "Kraag") {
-      alert("Incorrect password.");
-      window.location.href = "/";
+  <title>Content Manager | Chronicles</title>
+  <style>
+    body {
+      background-color: #1a1a2e;
+      color: #e4e4e4;
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
     }
-  </script>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    #login-form {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    h1 { color: #e94560; margin-bottom: 1.5rem; }
+    input {
+      background: #0f3460;
+      border: 1px solid #e94560;
+      color: white;
+      padding: 0.8rem;
+      border-radius: 4px;
+      width: 200px;
+      margin-bottom: 1rem;
+    }
+    button {
+      background: #e94560;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { background: #ff5e78; }
+  </style>
 </head>
 <body>
-  <!-- Include the script that builds the page and powers Netlify CMS -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <div id="login-container">
+    <div id="login-form">
+      <h1>Chronicles Admin</h1>
+      <input type="password" id="password" placeholder="Secret Phrase..." autofocus />
+      <br>
+      <button onclick="checkPassword()">Enter Vault</button>
+    </div>
+  </div>
+
+  <script>
+    function checkPassword() {
+      const pass = document.getElementById('password').value;
+      if (pass === "Kraag") {
+        document.getElementById('login-container').style.display = 'none';
+        const script = document.createElement('script');
+        script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
+        document.body.appendChild(script);
+      } else {
+        alert("The vault remains sealed.");
+      }
+    }
+    // Allow pressing Enter to submit
+    document.getElementById('password').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') checkPassword();
+    });
+  </script>
 </body>
 </html>

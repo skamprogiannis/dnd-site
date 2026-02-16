@@ -44,8 +44,13 @@ export const defaultContentPageLayout: PageLayout = {
       folderDefaultState: "collapsed",
       useSavedState: true,
       mapFn: (node) => {
-        if (node.displayName === "npcs") {
+        const lowerName = node.displayName.toLowerCase()
+        if (lowerName === "npcs") {
           node.displayName = "NPCs"
+        } else if (lowerName === "characters") {
+          node.displayName = "Characters"
+        } else if (node.name === "Lucian" && node.file) {
+          node.displayName = "Lucian, the Pale Inquisitor"
         } else {
           node.displayName = node.displayName
             .replace(/-/g, " ")
@@ -55,14 +60,31 @@ export const defaultContentPageLayout: PageLayout = {
         return node
       },
       filterFn: (node) => {
-        return node.name !== "The Blood of the Creator"
+        // Hide the "Lucian" subfolder (it has no .file property)
+        if (node.name === "Lucian" && !node.file) {
+          return false
+        }
+        return true
       },
     }),
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
   ],
   right: [
-    Component.Graph(),
+    Component.Graph({
+      localGraph: {
+        repelForce: 0.5,
+        centerForce: 0.3,
+        linkDistance: 50,
+        fontSize: 0.6,
+      },
+      globalGraph: {
+        repelForce: 0.5,
+        centerForce: 0.2,
+        linkDistance: 50,
+        fontSize: 0.6,
+      },
+    }),
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
   ],
@@ -89,8 +111,13 @@ export const defaultListPageLayout: PageLayout = {
       folderDefaultState: "collapsed",
       useSavedState: true,
       mapFn: (node) => {
-        if (node.displayName === "npcs") {
+        const lowerName = node.displayName.toLowerCase()
+        if (lowerName === "npcs") {
           node.displayName = "NPCs"
+        } else if (lowerName === "characters") {
+          node.displayName = "Characters"
+        } else if (node.name === "Lucian" && node.file) {
+          node.displayName = "Lucian, the Pale Inquisitor"
         } else {
           node.displayName = node.displayName
             .replace(/-/g, " ")
@@ -100,7 +127,10 @@ export const defaultListPageLayout: PageLayout = {
         return node
       },
       filterFn: (node) => {
-        return node.name !== "The Blood of the Creator"
+        if (node.name === "Lucian" && !node.file) {
+          return false
+        }
+        return true
       },
     }),
   ],

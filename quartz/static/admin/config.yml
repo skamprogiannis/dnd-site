@@ -1,20 +1,29 @@
 backend:
-  name: git-gateway
-  branch: main # Branch to update (optional; defaults to master)
+  name: github
   repo: skamprogiannis/dnd-site
+  branch: main
 
-media_folder: "content/lucian/images" # Media files will be stored in the repo under content/images
-public_folder: "lucian/images" # The src attribute for uploaded media
+media_folder: "content/Characters/Lucian/images"
+public_folder: "Characters/Lucian/images"
 
 collections:
-  - name: "characters" # Used in routes, e.g., /admin/collections/blog
-    label: "Characters" # Used in the UI
-    folder: "content/lucian" # The path to the folder where the documents are stored
-    create: true # Allow users to create new documents in this collection
-    slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
-    fields: # The fields for each document, usually in front matter
-      - {label: "Layout", name: "layout", widget: "hidden", default: "blog"}
+  - name: "characters"
+    label: "Characters"
+    folder: "content/Characters"
+    create: true
+    slug: "{{title}}"
+    fields:
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "Publish Date", name: "date", widget: "datetime"}
-      - {label: "Featured Image", name: "thumbnail", widget: "image"}
+      - {label: "Tags", name: "tags", widget: "list"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "npcs"
+    label: "NPCs"
+    folder: "content/NPCs"
+    create: true
+    slug: "{{title}}"
+    fields:
+      - {label: "Name", name: "name", widget: "string"}
+      - {label: "Race", name: "race", widget: "string"}
+      - {label: "Tags", name: "tags", widget: "list"}
       - {label: "Body", name: "body", widget: "markdown"}

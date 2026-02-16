@@ -8,8 +8,8 @@ Welcome to the digital archive of our D&D campaigns. Here you will find the lege
 
 ## Characters
 
-- [[lucian/index|Lucian, the Pale Inquisitor]]
-- [[kraag/index|Kraag]] (Coming Soon)
+- [[Characters/Lucian|Lucian, the Pale Inquisitor]]
+- [[Characters/Kraag, the Scourge|Kraag, the Scourge]] (Coming Soon)
 
 ## How to Edit
 
