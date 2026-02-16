@@ -50,27 +50,27 @@ def process_html_file(source_file, target_file, slug, link_map, original_main_na
         parts = href.split("#", 1)
         path = parts[0]
         anchor = parts[1] if len(parts) > 1 else None
-        
+
         # Check if this path is in our link map
         new_path = None
-        
+
         # Normalize the path from href for matching
         norm_path = path.replace("%20", " ").strip().lower()
         if norm_path.endswith(".html"):
             norm_path = norm_path[:-5]
         norm_path = norm_path.replace(" ", "-").replace("_", "-")
-        
+
         # Search link_map keys
         for key, val in link_map.items():
             norm_key = key.lower()
             if norm_key.endswith(".html"):
                 norm_key = norm_key[:-5]
             norm_key = norm_key.replace(" ", "-").replace("_", "-")
-            
+
             if norm_path == norm_key:
                 new_path = val
                 break
-        
+
         if new_path:
             print(f"    Linked path: {path} -> {new_path}")
             # If the link points to the CURRENT file being processed
@@ -81,24 +81,23 @@ def process_html_file(source_file, target_file, slug, link_map, original_main_na
                     return f'href="#{anchor}"'
                 else:
                     return f'href="{slug}/{new_path}"'
-            
+
             # Link to another page in the same character set
             result = f'href="{slug}/{new_path}"'
             if anchor:
                 result += f"#{anchor}"
             return result
-            
-        return match.group(0)
 
+        return match.group(0)
 
     content = re.sub(r"href=\"([^\"]*)\"", link_replacer, content)
 
     # 3. Remove target="_self"
     content = re.sub(r"\s*target=\"_self\"", "", content)
-    
+
     # FIX: Remove data-path attributes that cause "This page does not exist yet" overlay
     content = re.sub(r'\s*data-path="[^"]*"', "", content)
-    
+
     # 4. Clean content
     content = clean_content(content)
 
@@ -121,17 +120,17 @@ def process_html_file(source_file, target_file, slug, link_map, original_main_na
         attrs_before = match.group(2)
         src_val = match.group(3)
         attrs_after = match.group(4)
-        
+
         # Try to find a name in alt, title, or src itself
         all_attrs = attrs_before + attrs_after + f' src="{src_val}"'
         name_match = re.search(r'(alt|title)="([^"]+)"', all_attrs)
-        
+
         raw_name = None
         if name_match:
             raw_name = name_match.group(2)
         elif not src_val.startswith("data:"):
             raw_name = Path(src_val).name
-            
+
         img_name = None
         if raw_name:
             # Clean name: remove special chars, spaces to hyphens
@@ -139,12 +138,12 @@ def process_html_file(source_file, target_file, slug, link_map, original_main_na
             img_dir = Path(target_file).parent / "images"
             if not img_dir.exists():
                 return match.group(0)
-                
+
             # Check if name already has extension
             has_ext = any(
                 raw_name.lower().endswith(e) for e in [".png", ".jpg", ".jpeg", ".gif"]
             )
-            
+
             candidates = []
             if has_ext:
                 candidates.append(raw_name)
@@ -157,17 +156,17 @@ def process_html_file(source_file, target_file, slug, link_map, original_main_na
                     candidates.append(f"{raw_name.lower()}{ext}")
                     candidates.append(f"{raw_name.replace(' ', '-').lower()}{ext}")
                     candidates.append(f"{raw_name.replace(' ', '_').lower()}{ext}")
-            
+
             for candidate in candidates:
                 if (img_dir / candidate).exists():
                     img_name = candidate
                     break
-        
+
         if img_name:
             print(f"    Linked image: {img_name}")
             # Use slug/images/... because of <base href="..">
             return f'<img{attrs_before}src="{slug}/images/{img_name}"{attrs_after}>'
-            
+
         return match.group(0)
 
     # First, let's normalize the Obsidian span+img structure to just the img tag
@@ -243,12 +242,14 @@ def main():
     # 2. Create link map
     link_map = {}
     main_page = None
-    
+
     # Identify the main page
     # Priority: 1. matches slug, 2. contains 'index', 3. largest file
-    slug_match = [f for f in html_files if f.stem.lower() == slug or slug in f.stem.lower()]
-    index_match = [f for f in html_files if 'index' in f.name.lower()]
-    
+    slug_match = [
+        f for f in html_files if f.stem.lower() == slug or slug in f.stem.lower()
+    ]
+    index_match = [f for f in html_files if "index" in f.name.lower()]
+
     if slug_match:
         main_page = slug_match[0]
     elif index_match:
@@ -279,6 +280,9 @@ def main():
 
     # 4. Copy images
     img_src = source_dir / "Images"
+    if not img_src.exists():
+        img_src = source_dir / "images"
+
     if img_src.exists():
         img_dest = deploy_dir / "images"
         img_dest.mkdir(exist_ok=True)
@@ -289,11 +293,11 @@ def main():
 
     # 5. Copy other assets (JSON, PDF)
     print(f"  Copying other assets...")
-    for ext in ['*.json', '*.pdf']:
+    for ext in ["*.json", "*.pdf"]:
         for f in source_dir.glob(ext):
             dest_name = f.name.replace(" ", "-").lower()
             # If the name is something like Lucian_Dhampir_Ranger.json, rename to character slug
-            if f.suffix == '.json' and len(list(source_dir.glob('*.json'))) == 1:
+            if f.suffix == ".json" and len(list(source_dir.glob("*.json"))) == 1:
                 dest_name = f"{slug}.json"
             shutil.copy2(f, deploy_dir / dest_name)
             print(f"    Copied: {dest_name}")
