@@ -2,8 +2,8 @@ backend:
   name: github
   repo: skamprogiannis/dnd-site
   branch: main
-  base_url: https://decap-cms-oauth-skamprogiannis.vercel.app # Placeholder - you will update this
-  auth_endpoint: auth
+  base_url: https://decap-proxy-eight.vercel.app
+  auth_endpoint: api/auth
 
 media_folder: "content/assets/images"
 public_folder: "assets/images"
