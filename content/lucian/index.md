@@ -1,4 +1,5 @@
-![[lucian.png]]
+![[images/lucian.png]]
+
 ## Summary
 
 In the ash-choked streets of **[Luthcheq](https://forgottenrealms.fandom.com/wiki/Luthcheq)**, Lucian was a tool of the Karanoks. As a Witch Hunter under the reign of [Shala Karanok](https://forgottenrealms.fandom.com/wiki/Shala_Karanok), he was trained to smell the "taint" of arcane magic before a single component was touched. He was a cold enforcer of [Entropy](https://forgottenrealms.fandom.com/wiki/Entropy), believing that his purpose was to keep the world silent and still. That changed in Mordulkin.
@@ -9,19 +10,21 @@ Lucian rose to the rank of Whitehawk within the Order. Because of his background
 
 His fall at the hands of Lady Isovold was not just a physical transformation, but a psychological assault. Because Lucian is a [Dhampir](https://5e.tools/races.html#dhampir_abh) and not a full thrall, Isovold’s telepathic link is fractured. He doesn't hear her voice clearly; instead, he suffers "The Static" — sudden, unwanted visions of her memories, the metallic scent of blood when he is hungry, or a cold, mocking laughter that echoes in his mind when he stands in a temple.
 
-Now, Lucian lives a ghost-life. His only confidante is Father Davor, a priest of Ilmater in a crumbling Westgate chapel. Davor sees the "half-life" Lucian leads as a form of sacred endurance. He provides Lucian with a sanctuary to meditate and fight off the hunger, reminding him that while his blood is cursed, his soul still answers to [Assuran](https://forgottenrealms.fandom.com/wiki/Hoar) (the Chessantan name for Hoar). Lucian no longer seeks "Justice”, that is for the living. He seeks Retribution.
+Now, Lucian lives a ghost-life. His only confidante is [[../NPCs/Father Davor|Father Davor]], a priest of Ilmater in a crumbling Westgate chapel. Davor sees the "half-life" Lucian leads as a form of sacred endurance. He provides Lucian with a sanctuary to meditate and fight off the hunger, reminding him that while his blood is cursed, his soul still answers to [Assuran](https://forgottenrealms.fandom.com/wiki/Hoar) (the Chessantan name for Hoar). Lucian no longer seeks "Justice”, that is for the living. He seeks Retribution.
 
 > [!infobox] **DM Dossier: The Open Wounds**
 > **Current Goal:** Retribution. Justice is for the living; Lucian seeks specific vengeance against Lady Isovold and the Night Masks.
 >
-> **Key NPC:** **[[Father Davor]]** (Ilmater Priest). Lucian's only safe harbor in Westgate. Provides spiritual grounding.
-> 
+> **Key NPC:** **[[../NPCs/Father Davor|Father Davor]]** (Ilmater Priest). Lucian's only safe harbor in Westgate. Provides spiritual grounding.
+>
 > **The Mechanic: "The Static"**
-> Lucian is not a thrall, but the link to **[[Lady Isovold]]** is not broken. 
-> * **Trigger:** When hungry or near great evil/blood.
-> * **Effect:** He hears cold laughter or sees her memories. Use this to whisper secrets or taunts during the game.
+> Lucian is not a thrall, but the link to **[[../NPCs/Lady Isovold|Lady Isovold]]** is not broken.
+>
+> - **Trigger:** When hungry or near great evil/blood.
+> - **Effect:** He hears cold laughter or sees her memories. Use this to whisper secrets or taunts during the game.
 
 ## History
+
 ### Luthcheq Witch Hunter
 
 In the City of Madness, silence is the only approved prayer. Under the gaze of the **Karanok** family—the Entropist lords who worship the sphere of annihilation. Here, the "Weave" was taught not as a gift of the gods, but as a parasitic infection of reality.
@@ -60,20 +63,20 @@ As the transformation took hold, it wasn't the prayers to Tyr that saved him—i
 
 He woke up changed. He wasn't the mindless thrall Isovold expected. His Chessantan iron-will had halted the change halfway, leaving him a Dhampir. He made his way to a safehouse of the Order, but as he stood at the gates, he saw his own face on a memorial shroud. He listened from the dark as the survivors spoke of his "noble sacrifice." He realized then that he couldn't return; his presence would be a heresy they were sworn to cleanse.
 
-### Half-life 
+### Half-life
 
-![[lucian_shadows.png]]
+![[images/lucian_shadows.png]]
 He carries a shattered badge of the Order of the Gauntlet in his pocket, a reminder of the man he used to be. Every time he looks in a mirror and sees his white-rooted hair and bloodless skin, his resolve hardens. He is a weapon forged in the dark, and he will not stop until the Night Masks are ash. Lucian now prays to **Assuran**, the Chessentan name of Hoar, the Doombringer. Tyr’s justice was for the living; Assuran’s retribution was for the dead.
 
 He transitioned from a holy investigator to a "contract specialist" in the North. He operates out of the damp alleys of Neverwinter, Waterdeep and Westgate, taking the cases the City Watch ignores. He is a predator of the dark, using the very curse Isovold gave him to climb walls and see through the shadows of the underworld.
 
-Isovold’s fascination with him is rooted in her own boredom. To her, Lucian is a masterpiece—a hunter who is now part of the herd. She leaves "Calling Cards",  when Lucian tracks a suspect to their lair, he often finds them already slain, their heart removed and replaced with a Chessantan coin or a splinter of his own broken sword. She is grooming him, waiting to see if his hunger eventually eclipses his hate.
+Isovold’s fascination with him is rooted in her own boredom. To her, Lucian is a masterpiece—a hunter who is now part of the herd. She leaves "Calling Cards", when Lucian tracks a suspect to their lair, he often finds them already slain, their heart removed and replaced with a Chessantan coin or a splinter of his own broken sword. She is grooming him, waiting to see if his hunger eventually eclipses his hate.
 
-His motivation is a cold, focused fire. He hunts Isovold for revenge, yes, but also for a glimmer of hope. He has found cryptic mentions in Inquisitorial texts of the _[[The Blood of the Creator]]_, the theory that if a Dhampir slays the one who turned them and consumes their essence, the curse might be burned away.
+His motivation is a cold, focused fire. He hunts Isovold for revenge, yes, but also for a glimmer of hope. He has found cryptic mentions in Inquisitorial texts of the _[[../Items/The Blood of the Creator|The Blood of the Creator]]_, the theory that if a Dhampir slays the one who turned them and consumes their essence, the curse might be burned away.
 
-In this ghost-life, his only confidante is **[[Father Davor]]**, a priest of **[Ilmater](https://forgottenrealms.fandom.com/wiki/Ilmater)** in a crumbling Westgate chapel. Davor sees the "half-life" Lucian leads as a form of sacred endurance. He provides Lucian with a sanctuary to meditate and fight off the hunger, reminding him that while his blood is cursed, he still has a role to play in this life. Lucian no longer seeks "Justice” in the traditional sense.
+In this ghost-life, his only confidante is **[[../NPCs/Father Davor|Father Davor]]**, a priest of **[Ilmater](https://forgottenrealms.fandom.com/wiki/Ilmater)** in a crumbling Westgate chapel. Davor sees the "half-life" Lucian leads as a form of sacred endurance. He provides Lucian with a sanctuary to meditate and fight off the hunger, reminding him that while his blood is cursed, he still has a role to play in this life. Lucian no longer seeks "Justice” in the traditional sense.
 
 He carries his **Heavy Crossbow** for the opening shot, a silver-edged **Shortsword** for the work, and a **Dagger** for the finish. He doesn't see himself as a knight anymore. He is a verdict. He is the thing that makes vampires check the shadows behind them. He walks the line between man and monster, the silver badge of the Gauntlet hidden against his pale chest, channeling the magic of the wild into the justice of the dead.
 
 > [!infobox] **Alignment: Neutral Good**
-Lucian doesn't kill for fun or hurt civilians. He fulfills contracts, hunting those who truly deserve it. He has no respect for the "Law" because because the law would have him executed.
+> Lucian doesn't kill for fun or hurt civilians. He fulfills contracts, hunting those who truly deserve it. He has no respect for the "Law" because because the law would have him executed.

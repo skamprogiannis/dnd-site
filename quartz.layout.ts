@@ -8,7 +8,7 @@ export const sharedPageComponents: SharedLayout = {
   afterBody: [],
   footer: Component.Footer({
     links: {
-      "Admin Login": "/admin",
+      "Admin Login": "/static/admin/",
       "Source Code": "https://github.com/skamprogiannis/dnd-site",
     },
   }),
@@ -38,7 +38,28 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      title: "Explorer",
+      folderClickBehavior: "collapse",
+      folderDefaultState: "collapsed",
+      useSavedState: true,
+      mapFn: (node) => {
+        if (node.displayName === "npcs") {
+          node.displayName = "NPCs"
+        } else {
+          node.displayName = node.displayName
+            .replace(/-/g, " ")
+            .replace(/_/g, " ")
+            .replace(/\b\w/g, (c) => c.toUpperCase())
+        }
+        return node
+      },
+      filterFn: (node) => {
+        return node.name !== "The Blood of the Creator"
+      },
+    }),
+    Component.DesktopOnly(Component.TableOfContents()),
+    Component.Backlinks(),
   ],
   right: [
     Component.Graph(),
@@ -62,7 +83,26 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      title: "Explorer",
+      folderClickBehavior: "collapse",
+      folderDefaultState: "collapsed",
+      useSavedState: true,
+      mapFn: (node) => {
+        if (node.displayName === "npcs") {
+          node.displayName = "NPCs"
+        } else {
+          node.displayName = node.displayName
+            .replace(/-/g, " ")
+            .replace(/_/g, " ")
+            .replace(/\b\w/g, (c) => c.toUpperCase())
+        }
+        return node
+      },
+      filterFn: (node) => {
+        return node.name !== "The Blood of the Creator"
+      },
+    }),
   ],
   right: [],
 }

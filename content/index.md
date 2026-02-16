@@ -8,12 +8,10 @@ Welcome to the digital archive of our D&D campaigns. Here you will find the lege
 
 ## Characters
 
-- [[lucian/Lucian, the Pale Inquisitor]]
-- [[lucian/Father Davor]]
-- [[lucian/Lady Isovold]]
-- [[lucian/The Blood of the Creator]]
+- [[lucian/index|Lucian, the Pale Inquisitor]]
+- [[kraag/index|Kraag]] (Coming Soon)
 
 ## How to Edit
 
 This site is powered by **Quartz** and **Decap CMS**.
-To edit content or add new characters, visit the [[admin/index|Admin Panel]].
+To edit content or add new characters, visit the [Admin Panel](/static/admin/).

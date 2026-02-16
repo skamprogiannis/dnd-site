@@ -4,6 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
+  <script>
+    var pass = prompt("Enter Password to access the Editor:");
+    if (pass !== "Kraag") {
+      alert("Incorrect password.");
+      window.location.href = "/";
+    }
+  </script>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
