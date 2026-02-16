@@ -11,6 +11,7 @@ display_url: "https://dnd.caravanserai.gr"
 collections:
   - name: "characters"
     label: "Characters"
+    label_singular: "Character"
     folder: "content/Characters"
     extension: "md"
     format: "frontmatter"
@@ -25,6 +26,7 @@ collections:
 
   - name: "npcs"
     label: "NPCs"
+    label_singular: "NPC"
     folder: "content/NPCs"
     extension: "md"
     format: "frontmatter"

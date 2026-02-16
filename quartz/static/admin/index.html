@@ -7,6 +7,7 @@
   <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
+    /* Clean Vault Lock */
     #vault-lock {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -20,7 +21,7 @@
     #lock-form {
       background: #1a1a20;
       padding: 2.5rem;
-      border-radius: 8px;
+      border-radius: 12px;
       border: 1px solid #393639;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -28,25 +29,47 @@
       max-width: 350px;
     }
     #lock-form h1 { color: #7b97aa; margin-bottom: 1.5rem; font-size: 1.5rem; }
+    
+    .input-group {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+    
     #lock-form input {
       background: #161618;
       border: 1px solid #393639;
       color: #ebebec;
       padding: 0.8rem;
+      padding-right: 2.5rem;
       border-radius: 4px;
       width: 100%;
       box-sizing: border-box;
-      margin-bottom: 1rem;
       font-size: 1rem;
     }
-    #lock-form input:focus { outline: none; border-color: #7b97aa; }
+    
+    #toggle-pass {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: #7b97aa;
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+
     #error-msg {
-      color: #ff5555;
+      color: #e94560;
       font-size: 0.9rem;
       margin-bottom: 1rem;
       display: none;
+      font-weight: bold;
     }
-    #lock-form button {
+    
+    #lock-form button.submit {
       background: #7b97aa;
       color: #161618;
       border: none;
@@ -55,21 +78,42 @@
       cursor: pointer;
       font-weight: bold;
       width: 100%;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+    #lock-form button.submit:hover { background: #9eb2c0; }
+
+    /* Decap CMS Minimal Overrides */
+    #nc-root {
+      background-color: #fff !important;
     }
   </style>
 </head>
 <body>
   <div id="vault-lock">
     <div id="lock-form">
-      <h1>Chronicles Admin</h1>
-      <input type="password" id="vault-pass" placeholder="Enter Secret Phrase..." autofocus />
-      <div id="error-msg">The vault remains sealed. Try again.</div>
-      <button onclick="unlockVault()">Unlock Vault</button>
+      <h1>Edit the Chronicles</h1>
+      <div class="input-group">
+        <input type="password" id="vault-pass" placeholder="Secret Phrase..." autofocus />
+        <button id="toggle-pass" onclick="toggleVisibility()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        </button>
+      </div>
+      <div id="error-msg">The archives remain sealed. Try again.</div>
+      <button class="submit" onclick="unlockVault()">Unseal the Archive</button>
     </div>
   </div>
 
   <script>
+    function toggleVisibility() {
+      const input = document.getElementById('vault-pass');
+      const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+      input.setAttribute('type', type);
+    }
+
     function loadCMS() {
+      if (window.CMS_LOADED) return;
+      window.CMS_LOADED = true;
       const script = document.createElement('script');
       script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
       document.body.appendChild(script);
@@ -82,11 +126,14 @@
         document.getElementById('vault-lock').style.display = 'none';
         loadCMS();
       } else {
-        document.getElementById('error-msg').style.display = 'block';
+        const error = document.getElementById('error-msg');
+        error.style.display = 'block';
         document.getElementById('vault-pass').value = '';
+        document.getElementById('vault-pass').focus();
       }
     }
 
+    // Check if already unlocked in this session
     if (localStorage.getItem('vault_unlocked') === 'true') {
       document.getElementById('vault-lock').style.display = 'none';
       loadCMS();
