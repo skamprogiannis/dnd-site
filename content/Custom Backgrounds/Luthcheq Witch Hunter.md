@@ -1,4 +1,5 @@
 ---
+title: Luthcheq Witch Hunter
 type: Background
 source: Homebrew
 tags:

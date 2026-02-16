@@ -2,8 +2,8 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "content/Characters/Lucian/images"
-public_folder: "Characters/Lucian/images"
+media_folder: "content/assets/images"
+public_folder: "assets/images"
 
 site_url: "https://dnd.caravanserai.gr"
 display_url: "https://dnd.caravanserai.gr"

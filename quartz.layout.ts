@@ -40,7 +40,7 @@ export const defaultContentPageLayout: PageLayout = {
     }),
     Component.Explorer({
       title: "Explorer",
-      folderClickBehavior: "link",
+      folderClickBehavior: "collapse",
       folderDefaultState: "collapsed",
       useSavedState: true,
       mapFn: (node) => {
@@ -49,7 +49,7 @@ export const defaultContentPageLayout: PageLayout = {
           node.displayName = "NPCs"
         } else if (lowerName === "characters") {
           node.displayName = "Characters"
-        } else if (node.slugSegment === "Lucian" && node.isFolder) {
+        } else if (node.slugSegment === "Lucian" && !node.isFolder) {
           node.displayName = "Lucian, the Pale Inquisitor"
         } else {
           node.displayName = node.displayName
@@ -59,9 +59,8 @@ export const defaultContentPageLayout: PageLayout = {
         }
       },
       filterFn: (node) => {
-        // Hide internal lore and background folders/pages from the sidebar
-        const toHide = ["Lore", "Custom Backgrounds", "Lucian"]
-        return !toHide.includes(node.slugSegment) && !toHide.includes(node.displayName)
+        const toHide = ["assets", "Lore", "Custom Backgrounds"]
+        return !toHide.includes(node.slugSegment)
       },
     }),
   ],
@@ -105,7 +104,7 @@ export const defaultListPageLayout: PageLayout = {
     }),
     Component.Explorer({
       title: "Explorer",
-      folderClickBehavior: "link",
+      folderClickBehavior: "collapse",
       folderDefaultState: "collapsed",
       useSavedState: true,
       mapFn: (node) => {
@@ -114,7 +113,7 @@ export const defaultListPageLayout: PageLayout = {
           node.displayName = "NPCs"
         } else if (lowerName === "characters") {
           node.displayName = "Characters"
-        } else if (node.slugSegment === "Lucian" && node.isFolder) {
+        } else if (node.slugSegment === "Lucian" && !node.isFolder) {
           node.displayName = "Lucian, the Pale Inquisitor"
         } else {
           node.displayName = node.displayName
@@ -124,8 +123,8 @@ export const defaultListPageLayout: PageLayout = {
         }
       },
       filterFn: (node) => {
-        const toHide = ["Lore", "Custom Backgrounds", "Lucian"]
-        return !toHide.includes(node.slugSegment) && !toHide.includes(node.displayName)
+        const toHide = ["assets", "Lore", "Custom Backgrounds"]
+        return !toHide.includes(node.slugSegment)
       },
     }),
   ],

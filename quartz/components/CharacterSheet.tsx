@@ -1,8 +1,7 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
-import { i18n } from "../i18n"
 import { classNames } from "../util/lang"
 
-const CharacterSheet: QuartzComponent = ({ fileData, displayClass, cfg }: QuartzComponentProps) => {
+const CharacterSheet: QuartzComponent = ({ fileData, displayClass }: QuartzComponentProps) => {
   const sheetPath = fileData.frontmatter?.sheet as string | undefined
   if (!sheetPath) {
     return null

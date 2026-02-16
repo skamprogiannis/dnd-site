@@ -1,3 +1,6 @@
+---
+title: The Blood of the creator
+---
 
 ## 1. The Alchemical Logic
 

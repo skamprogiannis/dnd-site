@@ -12,7 +12,7 @@ tags:
   - westgate
 ---
 
-![[../lucian/images/lady_isovold.png]]
+![[assets/images/lady_isovold.png]]
 
 > [!quote]
 > "When the sun sets, Whitehawk, you will find that hunger is the only law that truly matters."
@@ -25,7 +25,7 @@ She is not a brute; she is a corruptor. She does not simply wish to kill her ene
 
 ## Relationship with Lucian
 
-Isovold is the architect of **[[../lucian/index|Lucian, the Pale Inquisitor]]'s** curse. When he investigated her operations as a Whitehawk, she took it as a personal insult. Rather than killing him, she sought to turn the Order's "justice" into a mockery by forcing her blood upon him.
+Isovold is the architect of **[[Characters/Lucian|Lucian, the Pale Inquisitor]]'s** curse. When he investigated her operations as a Whitehawk, she took it as a personal insult. Rather than killing him, she sought to turn the Order's "justice" into a mockery by forcing her blood upon him.
 
 She is fascinated by Lucian's survival as a **Dhampir**. To her, he is a "masterpiece"—a hunter who is now part of the herd. She does not view him as a threat, but as a source of entertainment.
 
@@ -39,7 +39,7 @@ Because Lucian is not a full thrall, her telepathic hold on him is fractured. Sh
 
 ## Tactics: The Calling Cards
 
-Isovold is grooming Lucian, waiting for his hunger to eclipse his hate. She taunts him by interfering with his contracts. When Lucian tracks a suspect to their lair, he often finds them already slain, their heart removed and replaced with:
+Isovold is grooming Lucian, waiting for his hunger to eclipse his hate. She taunts him by interfering with his contracts. When Lucian tracks a suspect to their lair, he often finds them already slain, their heart removed and replaced with a:
 
 - A **Chessantan coin**.
 - A splinter of his own broken sword (which she kept from the vault).

@@ -12,7 +12,7 @@ tags:
   - westgate
 ---
 
-![[../lucian/images/father_davor.png]]
+![[assets/images/father_davor.png]]
 
 > [!quote]
 > "You carry a heavy burden, my son. Do not ask for it to be lightened. Ask only for shoulders strong enough to bear it."
@@ -27,7 +27,7 @@ Davor is the only person who knows **Lucian's** true nature and allows him to li
 
 He provides Lucian with:
 
-- **Sanctuary:** A place to rest during the day where the "Static" of [[Lady Isovold]] is dampened by holy wards.
+- **Sanctuary:** A place to rest during the day where the "Static" of [[NPCs/Lady Isovold|Lady Isovold]] is dampened by holy wards.
 - **Counsel:** He reminds Lucian that while his blood may be cursed, he still has a role to play in this life.
 - **Supplies:** Holy water and information gathered from the downtrodden of the city.
 

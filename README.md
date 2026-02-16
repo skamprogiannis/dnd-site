@@ -7,6 +7,7 @@ A digital archive of our D&D campaigns, legends, and characters.
 - **Obsidian Support**: Native rendering of Obsidian Markdown, including Wikilinks, Callouts, and Graph View.
 - **Headless CMS**: Integrated Decap CMS for web-based editing by players.
 - **Automated Deployment**: Powered by Netlify for instant updates.
+- **Character Sheets**: Support for uploading and downloading `.json` character sheets.
 
 ## How to Edit
 
@@ -32,9 +33,7 @@ To point `dnd.caravanserai.gr` to this site:
 
 - **Enable Identity**: Done.
 - **Registration**: Currently set to **Open** (with GitHub/Google support).
-- **Enable Git Gateway**: Go to `Settings > Identity > Services` and click **Enable Git Gateway**. This connects the CMS to the GitHub API.
-
-- **Netlify Identity Widget**: This is already integrated into the site's code to handle login redirects.
+- **Enable Git Gateway**: Done. This connects the CMS to the GitHub API.
 
 ## Tech Stack
 

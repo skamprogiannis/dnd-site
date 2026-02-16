@@ -7,7 +7,7 @@
   <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
-    /* Full-screen Vault Overlay */
+    /* Clean Vault Lock Layer */
     #vault-lock {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -15,7 +15,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 10000;
+      z-index: 99999;
       font-family: system-ui, -apple-system, sans-serif;
     }
     #lock-form {
@@ -70,7 +70,7 @@
       font-weight: bold;
     }
     
-    button.submit-btn {
+    .submit-btn {
       background: #7b97aa;
       color: #161618;
       border: none;
@@ -82,21 +82,21 @@
       font-size: 1rem;
       transition: background 0.2s;
     }
-    button.submit-btn:hover { background: #9eb2c0; }
+    .submit-btn:hover { background: #9eb2c0; }
 
-    /* Decap CMS Minimal Overrides */
-    #nc-root {
-      background-color: #fff !important;
-    }
+    /* Hide Decap until unlocked */
+    #nc-root { display: none; }
+    body.unlocked #nc-root { display: block !important; }
+    body.unlocked #vault-lock { display: none !important; }
   </style>
 </head>
-<body>
+<body class="locked">
   <div id="vault-lock">
     <div id="lock-form">
       <h1>Edit the Chronicles</h1>
       <div class="input-group">
         <input type="password" id="vault-pass" placeholder="Secret Phrase..." autofocus />
-        <button id="toggle-pass" type="button" onclick="togglePassVisibility()">
+        <button id="toggle-pass" type="button" onclick="togglePass()">
           <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
         </button>
       </div>
@@ -106,50 +106,43 @@
   </div>
 
   <script>
-    function togglePassVisibility() {
+    function togglePass() {
       const input = document.getElementById('vault-pass');
       const eye = document.getElementById('eye-icon');
       if (input.type === 'password') {
         input.type = 'text';
-        // Change icon to eye-off
         eye.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
       } else {
         input.type = 'password';
-        // Change icon back to eye
         eye.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
       }
     }
 
-    function loadDecap() {
-      if (window.CMS_LOADED) return;
-      window.CMS_LOADED = true;
-      const script = document.createElement('script');
-      script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
-      document.body.appendChild(script);
+    function applyUnlock() {
+      document.body.classList.remove('locked');
+      document.body.classList.add('unlocked');
     }
 
     function handleUnlock() {
       const pass = document.getElementById('vault-pass').value;
       if (pass === "Kaarg") {
         localStorage.setItem('vault_unlocked', 'true');
-        document.getElementById('vault-lock').style.display = 'none';
-        loadDecap();
+        applyUnlock();
       } else {
-        const error = document.getElementById('error-msg');
-        error.style.display = 'block';
+        document.getElementById('error-msg').style.display = 'block';
         document.getElementById('vault-pass').value = '';
         document.getElementById('vault-pass').focus();
       }
     }
 
     if (localStorage.getItem('vault_unlocked') === 'true') {
-      document.getElementById('vault-lock').style.display = 'none';
-      loadDecap();
+      applyUnlock();
     }
 
     document.getElementById('vault-pass').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') handleUnlock();
     });
   </script>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
