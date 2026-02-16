@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager | Chronicles of Lemuria</title>
+  <!-- Load Identity Widget first -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
     body {
       background-color: #161618;
@@ -57,9 +59,9 @@
     }
     button:hover { background: #9eb2c0; }
     
-    /* Decap CMS Visibility Overrides - Aggressive */
+    /* Decap CMS Visibility Overrides */
     #nc-root * {
-      color: #161618 !important; /* Force dark text everywhere in CMS */
+      color: #161618 !important;
     }
     #nc-root input, 
     #nc-root textarea, 
@@ -88,17 +90,29 @@
   </div>
 
   <script>
+    function loadCMS() {
+      const script = document.createElement('script');
+      script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
+      document.body.appendChild(script);
+    }
+
     function checkPassword() {
       const pass = document.getElementById('password').value;
       if (pass === "Kraag") {
+        localStorage.setItem('vault_unlocked', 'true');
         document.getElementById('login-container').style.display = 'none';
-        const script = document.createElement('script');
-        script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
-        document.body.appendChild(script);
+        loadCMS();
       } else {
         alert("The vault remains sealed.");
       }
     }
+
+    // Check if already unlocked in this session
+    if (localStorage.getItem('vault_unlocked') === 'true') {
+      document.getElementById('login-container').style.display = 'none';
+      loadCMS();
+    }
+
     document.getElementById('password').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') checkPassword();
     });
