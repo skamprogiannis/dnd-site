@@ -1,0 +1,11 @@
+[build]
+  command = "npx quartz build"
+  publish = "public"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/static/admin/index.html"
+  status = 200

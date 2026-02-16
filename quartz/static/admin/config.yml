@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: skamprogiannis/dnd-site
+  name: git-gateway
   branch: main
 
 media_folder: "content/Characters/Lucian/images"
