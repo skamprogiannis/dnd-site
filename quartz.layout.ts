@@ -84,14 +84,14 @@ export const defaultContentPageLayout: PageLayout = {
         centerForce: 0.3,
         linkDistance: 50,
         fontSize: 0.6,
-        scale: 1.5,
+        scale: 2.0,
       },
       globalGraph: {
         repelForce: 0.5,
         centerForce: 0.2,
         linkDistance: 50,
         fontSize: 0.6,
-        scale: 1.2,
+        scale: 2.0,
       },
     }),
     Component.DesktopOnly(Component.TableOfContents()),
@@ -150,5 +150,24 @@ export const defaultListPageLayout: PageLayout = {
       },
     }),
   ],
-  right: [],
+  right: [
+    Component.Graph({
+      localGraph: {
+        repelForce: 0.5,
+        centerForce: 0.3,
+        linkDistance: 50,
+        fontSize: 0.6,
+        scale: 2.0,
+      },
+      globalGraph: {
+        repelForce: 0.5,
+        centerForce: 0.2,
+        linkDistance: 50,
+        fontSize: 0.6,
+        scale: 2.0,
+      },
+    }),
+    Component.DesktopOnly(Component.TableOfContents()),
+    Component.Backlinks(),
+  ],
 }
