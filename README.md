@@ -1,17 +1,26 @@
-# Quartz v4
+# Chronicles of the Dragon Coast
 
-> “[One] who works with the door open gets all kinds of interruptions, but [they] also occasionally gets clues as to what the world is and what might be important.” — Richard Hamming
+A digital archive of our D&D campaigns, legends, and characters.
 
-Quartz is a set of tools that helps you publish your [digital garden](https://jzhao.xyz/posts/networked-thought) and notes as a website for free.
+## Features
 
-🔗 Read the documentation and get started: https://quartz.jzhao.xyz/
+- **Obsidian Support**: Native rendering of Obsidian Markdown, including Wikilinks, Callouts, and Graph View.
+- **Headless CMS**: Integrated Decap CMS for web-based editing by players.
+- **Automated Deployment**: GitHub Actions workflow for continuous publishing.
 
-[Join the Discord Community](https://discord.gg/cRFFHYye7t)
+## How to Edit
 
-## Sponsors
+1. Visit the [Admin Panel](https://dnd.caravanserai.gr/static/admin/).
+2. Enter the secret phrase.
+3. Log in with your GitHub account.
+4. Save your changes to update the live site.
 
-<p align="center">
-  <a href="https://github.com/sponsors/jackyzha0">
-    <img src="https://cdn.jsdelivr.net/gh/jackyzha0/jackyzha0/sponsorkit/sponsors.svg" />
-  </a>
-</p>
+## Tech Stack
+
+- **Engine**: [Quartz v4](https://quartz.jzhao.xyz/)
+- **Hosting**: GitHub Pages
+- **Editor**: [Decap CMS](https://decapcms.org/)
+
+## License
+
+AGPL-3.0

@@ -6,8 +6,8 @@
   <title>Content Manager | Chronicles</title>
   <style>
     body {
-      background-color: #1a1a2e;
-      color: #e4e4e4;
+      background-color: #161618;
+      color: #ebebec;
       font-family: system-ui, -apple-system, sans-serif;
       display: flex;
       align-items: center;
@@ -15,43 +15,77 @@
       height: 100vh;
       margin: 0;
     }
+    #login-container {
+      width: 100%;
+      max-width: 400px;
+    }
     #login-form {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 2rem;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #1a1a20;
+      padding: 2.5rem;
+      border-radius: 8px;
+      border: 1px solid #393639;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    h1 { color: #e94560; margin-bottom: 1.5rem; }
+    h1 { color: #7b97aa; margin-bottom: 1.5rem; font-size: 1.5rem; }
     input {
-      background: #0f3460;
-      border: 1px solid #e94560;
-      color: white;
+      background: #161618;
+      border: 1px solid #393639;
+      color: #ebebec;
       padding: 0.8rem;
       border-radius: 4px;
-      width: 200px;
-      margin-bottom: 1rem;
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+    input:focus {
+      outline: none;
+      border-color: #7b97aa;
     }
     button {
-      background: #e94560;
-      color: white;
+      background: #7b97aa;
+      color: #161618;
       border: none;
-      padding: 0.8rem 1.5rem;
+      padding: 0.8rem 2rem;
       border-radius: 4px;
       cursor: pointer;
       font-weight: bold;
+      width: 100%;
+      font-size: 1rem;
+      transition: background 0.2s;
     }
-    button:hover { background: #ff5e78; }
+    button:hover { background: #9eb2c0; }
+    
+    /* Decap CMS Visibility Overrides */
+    /* Target all inputs and text areas inside the CMS once it loads */
+    #nc-root input, 
+    #nc-root textarea, 
+    #nc-root [class*="ControlPane"],
+    #nc-root [class*="EditorControl"] {
+      color: #333 !important;
+      background-color: #fff !important;
+    }
+    #nc-root label {
+      color: #333 !important;
+    }
+    /* Login screen specifically */
+    #nc-root div[class*="Login"] {
+      background-color: #f0f2f5 !important;
+    }
+    #nc-root div[class*="Login"] input {
+      color: #333 !important;
+      background-color: #fff !important;
+      border: 1px solid #ddd !important;
+    }
   </style>
 </head>
 <body>
   <div id="login-container">
     <div id="login-form">
       <h1>Chronicles Admin</h1>
-      <input type="password" id="password" placeholder="Secret Phrase..." autofocus />
-      <br>
-      <button onclick="checkPassword()">Enter Vault</button>
+      <input type="password" id="password" placeholder="Enter Secret Phrase..." autofocus />
+      <button onclick="checkPassword()">Unlock Vault</button>
     </div>
   </div>
 
@@ -67,7 +101,6 @@
         alert("The vault remains sealed.");
       }
     }
-    // Allow pressing Enter to submit
     document.getElementById('password').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') checkPassword();
     });

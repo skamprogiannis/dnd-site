@@ -40,7 +40,7 @@ export const defaultContentPageLayout: PageLayout = {
     }),
     Component.Explorer({
       title: "Explorer",
-      folderClickBehavior: "collapse",
+      folderClickBehavior: "link",
       folderDefaultState: "collapsed",
       useSavedState: true,
       mapFn: (node) => {
@@ -49,7 +49,7 @@ export const defaultContentPageLayout: PageLayout = {
           node.displayName = "NPCs"
         } else if (lowerName === "characters") {
           node.displayName = "Characters"
-        } else if (node.name === "Lucian" && node.file) {
+        } else if (node.name === "Lucian" && !node.file) {
           node.displayName = "Lucian, the Pale Inquisitor"
         } else {
           node.displayName = node.displayName
@@ -60,8 +60,15 @@ export const defaultContentPageLayout: PageLayout = {
         return node
       },
       filterFn: (node) => {
-        // Hide the "Lucian" subfolder (it has no .file property)
-        if (node.name === "Lucian" && !node.file) {
+        // Hide sub-pages completely
+        const toHide = [
+          "Luthcheq Witch Hunter",
+          "The Blood of the creator",
+          "The Blood Of The Creator",
+          "Luthcheq-Witch-Hunter",
+          "The-Blood-of-the-creator",
+        ]
+        if (toHide.includes(node.name)) {
           return false
         }
         return true
@@ -77,12 +84,14 @@ export const defaultContentPageLayout: PageLayout = {
         centerForce: 0.3,
         linkDistance: 50,
         fontSize: 0.6,
+        scale: 1.5,
       },
       globalGraph: {
         repelForce: 0.5,
         centerForce: 0.2,
         linkDistance: 50,
         fontSize: 0.6,
+        scale: 1.2,
       },
     }),
     Component.DesktopOnly(Component.TableOfContents()),
@@ -107,7 +116,7 @@ export const defaultListPageLayout: PageLayout = {
     }),
     Component.Explorer({
       title: "Explorer",
-      folderClickBehavior: "collapse",
+      folderClickBehavior: "link",
       folderDefaultState: "collapsed",
       useSavedState: true,
       mapFn: (node) => {
@@ -116,7 +125,7 @@ export const defaultListPageLayout: PageLayout = {
           node.displayName = "NPCs"
         } else if (lowerName === "characters") {
           node.displayName = "Characters"
-        } else if (node.name === "Lucian" && node.file) {
+        } else if (node.name === "Lucian" && !node.file) {
           node.displayName = "Lucian, the Pale Inquisitor"
         } else {
           node.displayName = node.displayName
@@ -127,7 +136,14 @@ export const defaultListPageLayout: PageLayout = {
         return node
       },
       filterFn: (node) => {
-        if (node.name === "Lucian" && !node.file) {
+        const toHide = [
+          "Luthcheq Witch Hunter",
+          "The Blood of the creator",
+          "The Blood Of The Creator",
+          "Luthcheq-Witch-Hunter",
+          "The-Blood-of-the-creator",
+        ]
+        if (toHide.includes(node.name)) {
           return false
         }
         return true

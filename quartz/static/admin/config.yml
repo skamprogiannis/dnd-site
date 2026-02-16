@@ -6,6 +6,9 @@ backend:
 media_folder: "content/Characters/Lucian/images"
 public_folder: "Characters/Lucian/images"
 
+site_url: "https://dnd.caravanserai.gr"
+display_url: "https://dnd.caravanserai.gr"
+
 collections:
   - name: "characters"
     label: "Characters"
