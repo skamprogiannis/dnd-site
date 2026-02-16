@@ -40,7 +40,3 @@ To point `dnd.caravanserai.gr` to this site:
 - **Engine**: [Quartz v4](https://quartz.jzhao.xyz/)
 - **Hosting**: [Netlify](https://www.netlify.com/)
 - **Editor**: [Decap CMS](https://decapcms.org/)
-
-## License
-
-AGPL-3.0

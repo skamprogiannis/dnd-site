@@ -1,5 +1,5 @@
 [build]
-  command = "npx quartz build"
+  command = "npx quartz build && cp quartz/static/_headers public/"
   publish = "public"
 
 [build.environment]
