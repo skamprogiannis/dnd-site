@@ -44,12 +44,12 @@ export const defaultContentPageLayout: PageLayout = {
       folderDefaultState: "collapsed",
       useSavedState: true,
       mapFn: (node) => {
-        const lowerName = node.displayName.toLowerCase()
-        if (lowerName === "npcs") {
+        const name = node.displayName.toLowerCase()
+        if (name === "npcs") {
           node.displayName = "NPCs"
-        } else if (lowerName === "characters") {
+        } else if (name === "characters") {
           node.displayName = "Characters"
-        } else if (node.slugSegment === "Lucian" && !node.isFolder) {
+        } else if (node.slugSegment === "Lucian") {
           node.displayName = "Lucian, the Pale Inquisitor"
         } else {
           node.displayName = node.displayName
@@ -59,6 +59,7 @@ export const defaultContentPageLayout: PageLayout = {
         }
       },
       filterFn: (node) => {
+        // Hide internal assets and specifically requested lore/background folders
         const toHide = ["assets", "Lore", "Custom Backgrounds"]
         return !toHide.includes(node.slugSegment)
       },
@@ -108,12 +109,12 @@ export const defaultListPageLayout: PageLayout = {
       folderDefaultState: "collapsed",
       useSavedState: true,
       mapFn: (node) => {
-        const lowerName = node.displayName.toLowerCase()
-        if (lowerName === "npcs") {
+        const name = node.displayName.toLowerCase()
+        if (name === "npcs") {
           node.displayName = "NPCs"
-        } else if (lowerName === "characters") {
+        } else if (name === "characters") {
           node.displayName = "Characters"
-        } else if (node.slugSegment === "Lucian" && !node.isFolder) {
+        } else if (node.slugSegment === "Lucian") {
           node.displayName = "Lucian, the Pale Inquisitor"
         } else {
           node.displayName = node.displayName

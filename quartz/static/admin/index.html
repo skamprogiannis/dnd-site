@@ -7,7 +7,7 @@
   <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
-    /* Clean Vault Lock Layer */
+    /* Clean Vault Lock */
     #vault-lock {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -15,7 +15,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 99999;
+      z-index: 10000;
       font-family: system-ui, -apple-system, sans-serif;
     }
     #lock-form {
@@ -84,10 +84,10 @@
     }
     .submit-btn:hover { background: #9eb2c0; }
 
-    /* Hide Decap until unlocked */
-    #nc-root { display: none; }
-    body.unlocked #nc-root { display: block !important; }
-    body.unlocked #vault-lock { display: none !important; }
+    /* Decap CMS Minimal Overrides */
+    #nc-root {
+      background-color: #fff !important;
+    }
   </style>
 </head>
 <body class="locked">
@@ -96,7 +96,7 @@
       <h1>Edit the Chronicles</h1>
       <div class="input-group">
         <input type="password" id="vault-pass" placeholder="Secret Phrase..." autofocus />
-        <button id="toggle-pass" type="button" onclick="togglePass()">
+        <button id="toggle-pass" type="button" onclick="handleTogglePass()">
           <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
         </button>
       </div>
@@ -106,7 +106,7 @@
   </div>
 
   <script>
-    function togglePass() {
+    function handleTogglePass() {
       const input = document.getElementById('vault-pass');
       const eye = document.getElementById('eye-icon');
       if (input.type === 'password') {
@@ -118,16 +118,12 @@
       }
     }
 
-    function applyUnlock() {
-      document.body.classList.remove('locked');
-      document.body.classList.add('unlocked');
-    }
-
     function handleUnlock() {
       const pass = document.getElementById('vault-pass').value;
       if (pass === "Kaarg") {
         localStorage.setItem('vault_unlocked', 'true');
-        applyUnlock();
+        document.getElementById('vault-lock').style.display = 'none';
+        document.body.classList.remove('locked');
       } else {
         document.getElementById('error-msg').style.display = 'block';
         document.getElementById('vault-pass').value = '';
@@ -136,7 +132,10 @@
     }
 
     if (localStorage.getItem('vault_unlocked') === 'true') {
-      applyUnlock();
+      window.onload = function() {
+        document.getElementById('vault-lock').style.display = 'none';
+        document.body.classList.remove('locked');
+      };
     }
 
     document.getElementById('vault-pass').addEventListener('keypress', function(e) {

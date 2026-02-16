@@ -7,7 +7,6 @@ const CharacterSheet: QuartzComponent = ({ fileData, displayClass }: QuartzCompo
     return null
   }
 
-  // Extract filename
   const fileName = sheetPath.split("/").pop() || "character.json"
 
   return (

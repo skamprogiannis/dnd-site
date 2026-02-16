@@ -280,7 +280,7 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     const tweenGroup = new TweenGroup()
 
     const defaultScale = 1 / scale
-    const activeScale = defaultScale * 2.0
+    const activeScale = defaultScale * 3.5
     for (const n of nodeRenderData) {
       const nodeId = n.simulationData.id
 
