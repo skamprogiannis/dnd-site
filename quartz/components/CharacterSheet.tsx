@@ -8,63 +8,46 @@ const CharacterSheet: QuartzComponent = ({ fileData, displayClass }: QuartzCompo
   }
 
   const fileName = sheetPath.split("/").pop() || "character.json"
+  // Ensure the path starts with a leading slash for absolute root referencing
   const fullPath = sheetPath.startsWith("/") ? sheetPath : `/${sheetPath}`
 
   return (
     <div class={classNames(displayClass, "character-sheet")}>
-      <button
-        type="button"
-        class="download-sheet-btn"
-        data-path={fullPath}
-        data-filename={fileName}
+      <a
+        href={fullPath}
+        download={fileName}
+        class="download-sheet-link"
+        target="_blank"
+        rel="noopener noreferrer"
         style={{
           display: "inline-block",
           padding: "0.5rem 1rem",
           backgroundColor: "var(--secondary)",
           color: "var(--light)",
           borderRadius: "4px",
-          border: "none",
-          cursor: "pointer",
+          textDecoration: "none",
           fontWeight: "bold",
           marginTop: "1rem",
           fontSize: "0.8rem",
           textAlign: "center",
           width: "100%",
           fontFamily: "var(--bodyFont)",
+          cursor: "pointer",
         }}
       >
         Download Character JSON
-      </button>
+      </a>
     </div>
   )
 }
 
 CharacterSheet.afterDOMLoaded = `
-document.addEventListener("click", async (e) => {
-  const btn = e.target.closest(".download-sheet-btn")
-  if (!btn) return
-
-  const path = btn.getAttribute("data-path")
-  const filename = btn.getAttribute("data-filename")
-  if (!path || !filename) return
-
-  // Standard Link Download Method
-  const link = document.createElement("a")
-  link.href = path
-  link.download = filename
-  link.style.display = "none"
-  document.body.appendChild(link)
-  link.click()
-  
-  // Clean up
-  setTimeout(() => {
-    document.body.removeChild(link)
-  }, 100)
-})
+// No complex script needed - standard <a> tag with download attribute works best on static sites
+// If the browser opens the JSON instead of downloading, the user can Ctrl+S
 `
 
 CharacterSheet.css = `
-.character-sheet button:hover {
+.character-sheet a:hover {
   background-color: var(--tertiary) !important;
 }
 `

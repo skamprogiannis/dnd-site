@@ -70,12 +70,15 @@ export const defaultContentPageLayout: PageLayout = {
       },
       filterFn: (node) => {
         const slug = node.slugSegment ? node.slugSegment.toLowerCase() : ""
-        // Root node
-        if (node.slug === "") return true
-        // Hide internal folders
+        // Root node has no slugSegment or empty string
+        if (!slug) return true
+
+        // Hide internal assets/static folders
         if (slug === "assets" || slug === "static") return false
-        // Hide index files
+
+        // Hide index files (they are represented by the folder)
         if (node.slug.endsWith("index")) return false
+
         return true
       },
     }),
@@ -135,7 +138,7 @@ export const defaultListPageLayout: PageLayout = {
       },
       filterFn: (node) => {
         const slug = node.slugSegment ? node.slugSegment.toLowerCase() : ""
-        if (node.slug === "") return true
+        if (!slug) return true
         if (slug === "assets" || slug === "static") return false
         if (node.slug.endsWith("index")) return false
         return true
