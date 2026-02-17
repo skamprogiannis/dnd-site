@@ -3,7 +3,7 @@ backend:
   repo: skamprogiannis/dnd-site
   branch: main
   base_url: https://decap-proxy-eight.vercel.app
-  auth_endpoint: api/auth
+  auth_endpoint: auth
 
 media_folder: "content/assets/images"
 public_folder: "assets/images"

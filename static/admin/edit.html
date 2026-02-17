@@ -102,21 +102,26 @@
       }
     }
 
+    function applyUnlock() {
+      const lock = document.getElementById('vault-lock');
+      if (lock) {
+        lock.style.setProperty('display', 'none', 'important');
+      }
+    }
+
     function unlock() {
       const pass = document.getElementById('vault-pass').value;
       if (pass === "Kaarg") {
         sessionStorage.setItem('vault_unlocked', 'true');
-        const lock = document.getElementById('vault-lock');
-        if (lock) lock.style.display = 'none';
+        applyUnlock();
       } else {
-        const err = document.getElementById('error-msg');
-        if (err) err.style.display = 'block';
+        document.getElementById('error-msg').style.display = 'block';
         document.getElementById('vault-pass').value = '';
         document.getElementById('vault-pass').focus();
       }
     }
 
-    // Check session on load
+    // Immediate check
     if (sessionStorage.getItem('vault_unlocked') === 'true') {
       document.write('<style>#vault-lock { display: none !important; }</style>');
     }
@@ -142,7 +147,10 @@
 
   <script>
     document.getElementById('vault-pass').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') unlock();
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        unlock();
+      }
     });
   </script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
