@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Content Manager | Chronicles of Lemuria</title>
+  <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+  <script>
+    // Vault Gatekeeper - Must run first
+    (function() {
+      if (sessionStorage.getItem('vault_unlocked') === 'true') {
+        document.documentElement.classList.add('unlocked');
+      }
+    })();
+
+    function togglePass() {
+      const input = document.getElementById('vault-pass');
+      const eyeIcon = document.getElementById('eye-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        eyeIcon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+      } else {
+        input.type = 'password';
+        eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+      }
+    }
+
+    function unlock() {
+      const pass = document.getElementById('vault-pass').value;
+      if (pass === "Kaarg") {
+        sessionStorage.setItem('vault_unlocked', 'true');
+        document.documentElement.classList.add('unlocked');
+        document.getElementById('vault-lock').style.display = 'none';
+      } else {
+        const err = document.getElementById('error-msg');
+        if (err) err.style.display = 'block';
+        document.getElementById('vault-pass').value = '';
+        document.getElementById('vault-pass').focus();
+      }
+    }
+  </script>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    /* Hide Everything by default if locked */
+    html:not(.unlocked) #nc-root { display: none !important; }
+    html.unlocked #vault-lock { display: none !important; }
+
+    #vault-lock {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: #161618;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100000;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    #lock-form {
+      background: #1a1a20;
+      padding: 2.5rem;
+      border-radius: 12px;
+      border: 1px solid #393639;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      width: 100%;
+      max-width: 350px;
+    }
+    #lock-form h1 { color: #7b97aa; margin-bottom: 1.5rem; font-size: 1.5rem; }
+    .input-container { position: relative; margin-bottom: 1rem; display: flex; align-items: center; }
+    #vault-pass {
+      background: #161618;
+      border: 1px solid #393639;
+      color: #ebebec;
+      padding: 0.8rem;
+      padding-right: 3rem;
+      border-radius: 4px;
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 1rem;
+    }
+    #toggle-pass {
+      position: absolute;
+      right: 10px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: #7b97aa;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #error-msg { color: #e94560; font-size: 0.9rem; margin-bottom: 1rem; display: none; font-weight: bold; }
+    .submit-btn {
+      background: #7b97aa;
+      color: #161618;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+    .submit-btn:hover { background: #9eb2c0; }
+    #nc-root { background-color: #fff !important; }
+  </style>
+</head>
+<body>
+  <div id="vault-lock">
+    <div id="lock-form">
+      <h1>Edit the Chronicles</h1>
+      <div class="input-container">
+        <input type="password" id="vault-pass" placeholder="Secret Phrase..." autofocus />
+        <button id="toggle-pass" type="button" onclick="togglePass()">
+          <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
+      <div id="error-msg">The archives remain sealed. Try again.</div>
+      <button class="submit-btn" type="button" onclick="unlock()">Unseal the Archive</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('vault-pass').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        unlock();
+      }
+    });
+  </script>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+</body>
+</html>
