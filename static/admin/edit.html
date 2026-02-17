@@ -5,8 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager | Chronicles of Lemuria</title>
   <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+  <script>
+    // Vault Gatekeeper - Must run first
+    (function() {
+      if (sessionStorage.getItem('vault_unlocked') === 'true') {
+        document.documentElement.classList.add('unlocked');
+      }
+    })();
+
+    function togglePass() {
+      const input = document.getElementById('vault-pass');
+      const eyeIcon = document.getElementById('eye-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        eyeIcon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+      } else {
+        input.type = 'password';
+        eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+      }
+    }
+
+    function unlock() {
+      const pass = document.getElementById('vault-pass').value;
+      if (pass === "Kaarg") {
+        sessionStorage.setItem('vault_unlocked', 'true');
+        document.documentElement.classList.add('unlocked');
+        document.getElementById('vault-lock').style.display = 'none';
+      } else {
+        const err = document.getElementById('error-msg');
+        if (err) err.style.display = 'block';
+        document.getElementById('vault-pass').value = '';
+        document.getElementById('vault-pass').focus();
+      }
+    }
+  </script>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
+    /* Hide Everything by default if locked */
+    html:not(.unlocked) #nc-root { display: none !important; }
+    html.unlocked #vault-lock { display: none !important; }
+
     #vault-lock {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -68,36 +106,6 @@
     .submit-btn:hover { background: #9eb2c0; }
     #nc-root { background-color: #fff !important; }
   </style>
-  <script>
-    function togglePass() {
-      const input = document.getElementById('vault-pass');
-      const eyeIcon = document.getElementById('eye-icon');
-      if (input.type === 'password') {
-        input.type = 'text';
-        eyeIcon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
-      } else {
-        input.type = 'password';
-        eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
-      }
-    }
-
-    function handleUnlock() {
-      const pass = document.getElementById('vault-pass').value;
-      if (pass === "Kaarg") {
-        sessionStorage.setItem('vault_unlocked', 'true');
-        document.getElementById('vault-lock').style.display = 'none';
-      } else {
-        document.getElementById('error-msg').style.display = 'block';
-        document.getElementById('vault-pass').value = '';
-        document.getElementById('vault-pass').focus();
-      }
-    }
-
-    // Hide lock if already unlocked
-    if (sessionStorage.getItem('vault_unlocked') === 'true') {
-      document.write('<style>#vault-lock { display: none !important; }</style>');
-    }
-  </script>
 </head>
 <body>
   <div id="vault-lock">
@@ -113,7 +121,7 @@
         </button>
       </div>
       <div id="error-msg">The archives remain sealed. Try again.</div>
-      <button class="submit-btn" type="button" onclick="handleUnlock()">Unseal the Archive</button>
+      <button class="submit-btn" type="button" onclick="unlock()">Unseal the Archive</button>
     </div>
   </div>
 
@@ -121,7 +129,7 @@
     document.getElementById('vault-pass').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') {
         e.preventDefault();
-        handleUnlock();
+        unlock();
       }
     });
   </script>
