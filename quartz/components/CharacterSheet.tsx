@@ -48,23 +48,18 @@ document.addEventListener("click", async (e) => {
   const filename = btn.getAttribute("data-filename")
   if (!path || !filename) return
 
-  try {
-    const response = await fetch(path)
-    if (!response.ok) throw new Error("File not found")
-    const blob = await response.blob()
-    const url = window.URL.createObjectURL(blob)
-    const a = document.createElement("a")
-    a.style.display = "none"
-    a.href = url
-    a.download = filename
-    document.body.appendChild(a)
-    a.click()
-    window.URL.revokeObjectURL(url)
-    a.remove()
-  } catch (error) {
-    console.error("Download failed:", error)
-    window.open(path, "_blank")
-  }
+  // Standard Link Download Method
+  const link = document.createElement("a")
+  link.href = path
+  link.download = filename
+  link.style.display = "none"
+  document.body.appendChild(link)
+  link.click()
+  
+  // Clean up
+  setTimeout(() => {
+    document.body.removeChild(link)
+  }, 100)
 })
 `
 

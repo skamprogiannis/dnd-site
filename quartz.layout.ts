@@ -70,12 +70,12 @@ export const defaultContentPageLayout: PageLayout = {
       },
       filterFn: (node) => {
         const slug = node.slugSegment ? node.slugSegment.toLowerCase() : ""
-        // Never hide the root node
+        // Root node
         if (node.slug === "") return true
-        // Hide internal assets/static folders
+        // Hide internal folders
         if (slug === "assets" || slug === "static") return false
-        // Hide the home page file
-        if (node.slug === "index") return false
+        // Hide index files
+        if (node.slug.endsWith("index")) return false
         return true
       },
     }),
@@ -137,7 +137,7 @@ export const defaultListPageLayout: PageLayout = {
         const slug = node.slugSegment ? node.slugSegment.toLowerCase() : ""
         if (node.slug === "") return true
         if (slug === "assets" || slug === "static") return false
-        if (node.slug === "index") return false
+        if (node.slug.endsWith("index")) return false
         return true
       },
     }),
