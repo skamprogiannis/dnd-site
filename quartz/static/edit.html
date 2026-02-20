@@ -96,9 +96,23 @@
       const error = document.getElementById('error-msg');
       const eyeIcon = document.getElementById('eye-icon');
 
+      let cmsLoaded = false;
+
       function loadCMS() {
+        if (cmsLoaded) return;
+        cmsLoaded = true;
+        
+        console.log("Loading Decap CMS...");
+        
+        // Create and load the CMS script
         const script = document.createElement('script');
         script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
+        script.onload = function() {
+          console.log("Decap CMS script loaded");
+        };
+        script.onerror = function() {
+          console.error("Failed to load Decap CMS");
+        };
         document.body.appendChild(script);
       }
 
@@ -107,22 +121,26 @@
           const tokenData = sessionStorage.getItem('decap_auth_token');
           const authTime = sessionStorage.getItem('decap_auth_time');
           
+          console.log("Checking sessionStorage:", { tokenData: !!tokenData, authTime });
+          
           if (tokenData && authTime) {
-            // Token exists and was set recently (within last 10 seconds)
             const timeDiff = Date.now() - parseInt(authTime);
-            if (timeDiff < 10000) {
-              console.log("Found auth token in sessionStorage, triggering CMS login...");
+            if (timeDiff < 30000) { // 30 seconds window
+              console.log("Found valid auth token, processing...");
               sessionStorage.removeItem('decap_auth_token');
               sessionStorage.removeItem('decap_auth_time');
               
-              // Dispatch the authorization event for Decap CMS
-              const event = new MessageEvent('message', {
+              // Dispatch events for Decap CMS
+              window.dispatchEvent(new MessageEvent('message', {
                 data: "authorization:github:success:" + tokenData,
-                origin: window.location.origin,
-                bubbles: false,
-                cancelable: false
-              });
-              window.dispatchEvent(event);
+                origin: "*"
+              }));
+              
+              // Also try dispatching on document
+              document.dispatchEvent(new MessageEvent('message', {
+                data: "authorization:github:success:" + tokenData,
+                origin: "*"
+              }));
               
               return true;
             }
@@ -136,13 +154,15 @@
       function checkUnlock() {
         // Check if already unlocked
         if (sessionStorage.getItem('vault_unlocked') === 'true') {
+          console.log("Vault already unlocked via session");
           lock.style.display = 'none';
           loadCMS();
           return;
         }
         
-        // Check for auth token in sessionStorage (from OAuth popup)
+        // Check for OAuth token
         if (checkSessionStorageAuth()) {
+          console.log("Found OAuth token");
           lock.style.display = 'none';
           loadCMS();
           return;
@@ -151,23 +171,29 @@
 
       // Listen for postMessage from OAuth popup
       window.addEventListener('message', function(e) {
-        console.log("Received message:", e.data);
+        console.log("Received postMessage:", e.data ? e.data.substring(0, 50) : 'empty');
         
-        // Handle the token message
-        if (e.data && e.data.startsWith('authorization:')) {
-          // Let Decap CMS handle it
-        } else if (e.data === 'give_me_the_token') {
-          // We don't have a token to give
-        } else if (e.data.startsWith('here_is_the_token:')) {
-          // Got token from another window
-          const tokenData = e.data.replace('here_is_the_token:', '');
-          sessionStorage.setItem('decap_auth_token', tokenData);
-          sessionStorage.setItem('decap_auth_time', Date.now().toString());
-          checkSessionStorageAuth();
+        if (e.data && typeof e.data === 'string') {
+          if (e.data.startsWith('authorization:')) {
+            // Try to extract token and store in sessionStorage for CMS to find
+            try {
+              const parts = e.data.replace('authorization:github:success:', '');
+              sessionStorage.setItem('decap_auth_token', parts);
+              sessionStorage.setItem('decap_auth_time', Date.now().toString());
+              checkSessionStorageAuth();
+            } catch(err) {
+              console.error("Error storing token:", err);
+            }
+          } else if (e.data.startsWith('here_is_the_token:')) {
+            const tokenData = e.data.replace('here_is_the_token:', '');
+            sessionStorage.setItem('decap_auth_token', tokenData);
+            sessionStorage.setItem('decap_auth_time', Date.now().toString());
+            checkSessionStorageAuth();
+          }
         }
       });
 
-      // Poll for sessionStorage changes (for when popup closes before main window detects)
+      // Poll for sessionStorage
       var pollInterval = setInterval(function() {
         if (lock.style.display === 'none') {
           clearInterval(pollInterval);
@@ -178,7 +204,7 @@
           lock.style.display = 'none';
           loadCMS();
         }
-      }, 500);
+      }, 1000);
 
       function doUnlock() {
         if (input.value === "Kaarg") {
@@ -210,7 +236,14 @@
         }
       });
 
+      // Run check on load
       checkUnlock();
+      
+      // Also check on hash change (in case CMS changes URL)
+      window.addEventListener('hashchange', function() {
+        console.log("Hash changed to:", location.hash);
+        checkUnlock();
+      });
     })();
   </script>
 </body>

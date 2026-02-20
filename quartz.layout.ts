@@ -8,7 +8,7 @@ export const sharedPageComponents: SharedLayout = {
   afterBody: [],
   footer: Component.Footer({
     links: {
-      "Admin Login": "/edit",
+      "Admin Login": "/static/edit",
       "Source Code": "https://github.com/skamprogiannis/dnd-site",
     },
   }),

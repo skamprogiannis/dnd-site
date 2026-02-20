@@ -3,14 +3,16 @@
   "outputDirectory": "public",
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
+  "redirects": [
     {
       "source": "/edit",
-      "destination": "/static/edit.html"
+      "destination": "/static/edit.html",
+      "permanent": false
     },
     {
       "source": "/admin",
-      "destination": "/static/edit.html"
+      "destination": "/static/edit.html",
+      "permanent": false
     }
   ],
   "headers": [

@@ -16,4 +16,4 @@ Welcome to the digital archive of our D&D campaigns. Here you will find the lege
 ## How to Edit
 
 This site is powered by **Quartz** and **Decap CMS**.
-To edit content or add new characters, visit the <a href="/edit" data-router-ignore>Admin Panel</a>.
+To edit content or add new characters, visit the <a href="/static/edit" data-router-ignore>Admin Panel</a>.
