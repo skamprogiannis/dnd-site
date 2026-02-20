@@ -134,6 +134,29 @@
         
         console.log("Processing auth token...");
         
+        // Parse the token data
+        let tokenObj;
+        try {
+          tokenObj = JSON.parse(tokenData);
+        } catch (e) {
+          tokenObj = { token: tokenData, provider: "github" };
+        }
+        
+        // Store in localStorage for Decap CMS to find
+        // Decap CMS expects a specific format in localStorage
+        try {
+          localStorage.setItem('decap-auth-token', JSON.stringify(tokenObj));
+          localStorage.setItem('cms-users', JSON.stringify([{ name: 'GitHub User', login: 'github' }]));
+        } catch (e) {
+          console.log("localStorage not available:", e);
+        }
+        
+        // Also keep in sessionStorage as backup
+        try {
+          sessionStorage.setItem('decap_auth_token', tokenData);
+          sessionStorage.setItem('decap_auth_time', Date.now().toString());
+        } catch (e) {}
+        
         // Dispatch event for Decap CMS to pick up
         const event = new MessageEvent('message', {
           data: "authorization:github:success:" + tokenData,
@@ -144,9 +167,20 @@
         window.dispatchEvent(event);
         document.dispatchEvent(event);
         
+        // Also try dispatching on the window's opener if it exists
+        if (window.opener) {
+          window.opener.dispatchEvent(event);
+        }
+        
         // Hide lock and load CMS
         lock.style.display = 'none';
         loadCMS();
+        
+        // Reload the page after a short delay to let Decap pick up the token from localStorage
+        setTimeout(() => {
+          console.log("Reloading page for Decap CMS to pick up auth...");
+          window.location.reload();
+        }, 1000);
       }
 
       function checkSessionStorageAuth() {
