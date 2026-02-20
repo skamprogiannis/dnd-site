@@ -97,6 +97,8 @@
       const eyeIcon = document.getElementById('eye-icon');
 
       let cmsLoaded = false;
+      let authProcessed = false;
+      let pollInterval = null;
 
       function loadCMS() {
         if (cmsLoaded) return;
@@ -104,7 +106,6 @@
         
         console.log("Loading Decap CMS...");
         
-        // Create and load the CMS script
         const script = document.createElement('script');
         script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
         script.onload = function() {
@@ -116,32 +117,56 @@
         document.body.appendChild(script);
       }
 
+      function processToken(tokenData) {
+        // Prevent double processing
+        if (authProcessed) {
+          console.log("Auth already processed, skipping...");
+          return;
+        }
+        
+        authProcessed = true;
+        
+        // Clear any existing polling interval
+        if (pollInterval) {
+          clearInterval(pollInterval);
+          pollInterval = null;
+        }
+        
+        console.log("Processing auth token...");
+        
+        // Dispatch event for Decap CMS to pick up
+        const event = new MessageEvent('message', {
+          data: "authorization:github:success:" + tokenData,
+          origin: "*",
+          bubbles: false
+        });
+        
+        window.dispatchEvent(event);
+        document.dispatchEvent(event);
+        
+        // Hide lock and load CMS
+        lock.style.display = 'none';
+        loadCMS();
+      }
+
       function checkSessionStorageAuth() {
+        // If we've already processed auth, don't check again
+        if (authProcessed) return false;
+        
         try {
           const tokenData = sessionStorage.getItem('decap_auth_token');
           const authTime = sessionStorage.getItem('decap_auth_time');
           
-          console.log("Checking sessionStorage:", { tokenData: !!tokenData, authTime });
-          
           if (tokenData && authTime) {
             const timeDiff = Date.now() - parseInt(authTime);
             if (timeDiff < 30000) { // 30 seconds window
-              console.log("Found valid auth token, processing...");
+              console.log("Found valid auth token");
+              
+              // Remove from storage immediately to prevent re-processing
               sessionStorage.removeItem('decap_auth_token');
               sessionStorage.removeItem('decap_auth_time');
               
-              // Dispatch events for Decap CMS
-              window.dispatchEvent(new MessageEvent('message', {
-                data: "authorization:github:success:" + tokenData,
-                origin: "*"
-              }));
-              
-              // Also try dispatching on document
-              document.dispatchEvent(new MessageEvent('message', {
-                data: "authorization:github:success:" + tokenData,
-                origin: "*"
-              }));
-              
+              processToken(tokenData);
               return true;
             }
           }
@@ -151,60 +176,41 @@
         return false;
       }
 
-      function checkUnlock() {
-        // Check if already unlocked
-        if (sessionStorage.getItem('vault_unlocked') === 'true') {
-          console.log("Vault already unlocked via session");
-          lock.style.display = 'none';
-          loadCMS();
-          return;
-        }
+      function startPolling() {
+        if (pollInterval) return;
         
-        // Check for OAuth token
-        if (checkSessionStorageAuth()) {
-          console.log("Found OAuth token");
-          lock.style.display = 'none';
-          loadCMS();
-          return;
-        }
+        pollInterval = setInterval(function() {
+          if (authProcessed) {
+            clearInterval(pollInterval);
+            return;
+          }
+          checkSessionStorageAuth();
+        }, 1000);
       }
+
+      // Check on load
+      checkSessionStorageAuth();
+      
+      // Start polling
+      startPolling();
 
       // Listen for postMessage from OAuth popup
       window.addEventListener('message', function(e) {
-        console.log("Received postMessage:", e.data ? e.data.substring(0, 50) : 'empty');
+        if (authProcessed) return;
         
-        if (e.data && typeof e.data === 'string') {
-          if (e.data.startsWith('authorization:')) {
-            // Try to extract token and store in sessionStorage for CMS to find
-            try {
-              const parts = e.data.replace('authorization:github:success:', '');
-              sessionStorage.setItem('decap_auth_token', parts);
-              sessionStorage.setItem('decap_auth_time', Date.now().toString());
-              checkSessionStorageAuth();
-            } catch(err) {
-              console.error("Error storing token:", err);
-            }
-          } else if (e.data.startsWith('here_is_the_token:')) {
-            const tokenData = e.data.replace('here_is_the_token:', '');
-            sessionStorage.setItem('decap_auth_token', tokenData);
+        console.log("Received postMessage");
+        
+        if (e.data && typeof e.data === 'string' && e.data.startsWith('authorization:')) {
+          try {
+            const parts = e.data.replace('authorization:github:success:', '');
+            sessionStorage.setItem('decap_auth_token', parts);
             sessionStorage.setItem('decap_auth_time', Date.now().toString());
             checkSessionStorageAuth();
+          } catch(err) {
+            console.error("Error storing token:", err);
           }
         }
       });
-
-      // Poll for sessionStorage
-      var pollInterval = setInterval(function() {
-        if (lock.style.display === 'none') {
-          clearInterval(pollInterval);
-          return;
-        }
-        if (checkSessionStorageAuth()) {
-          clearInterval(pollInterval);
-          lock.style.display = 'none';
-          loadCMS();
-        }
-      }, 1000);
 
       function doUnlock() {
         if (input.value === "Kaarg") {
@@ -236,14 +242,11 @@
         }
       });
 
-      // Run check on load
-      checkUnlock();
-      
-      // Also check on hash change (in case CMS changes URL)
-      window.addEventListener('hashchange', function() {
-        console.log("Hash changed to:", location.hash);
-        checkUnlock();
-      });
+      // Check if already unlocked
+      if (sessionStorage.getItem('vault_unlocked') === 'true') {
+        lock.style.display = 'none';
+        loadCMS();
+      }
     })();
   </script>
 </body>
