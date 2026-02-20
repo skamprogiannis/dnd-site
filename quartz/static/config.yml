@@ -2,9 +2,9 @@ backend:
   name: github
   repo: skamprogiannis/dnd-site
   branch: main
-  # Empty base_url means it uses the current domain (Vercel)
-  base_url: ""
-  auth_endpoint: api/auth
+  # Point to our own OAuth gateway on Vercel
+  base_url: "https://dnd.caravanserai.gr"
+  auth_endpoint: "api/auth"
 
 media_folder: "content/assets/images"
 public_folder: "assets/images"

@@ -1,5 +1,5 @@
 ---
-title: The Blood of the creator
+title: The Blood of the Creator
 ---
 
 > [!quote]

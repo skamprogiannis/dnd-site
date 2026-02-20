@@ -85,7 +85,6 @@ export default (() => {
         <link rel="icon" href={iconPath} />
         <meta name="description" content={description} />
         <meta name="generator" content="Quartz" />
-        <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
         {css.map((resource) => CSSResourceToStyleElement(resource, true))}
         {js

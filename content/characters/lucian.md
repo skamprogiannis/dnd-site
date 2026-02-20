@@ -47,7 +47,7 @@ The transition from a hound of Luthcheq to a sword of the Gauntlet did not happe
 
 Lucian had been contracted by a minor noble to track a "rogue element"—a supposed sorcerer stirring up peasant unrest. He tracked the target to a barn, only to find it was a trap laid by a cell of the **Cult of the Dragon**. He was outnumbered, fighting with the desperate, jagged rhythm of a man expecting to die, when the doors were kicked in.
 
-A contingent of the **Order of the Gauntlet**, led by **Harkas Vane**, a Cleric of **[[Torm]]**, stormed the fray. Lucian paused, expecting the "holy knights" to be pompous hindrances. Instead, he watched Vane step between a Cultist’s dragon-breath spell and a cowering farmhand, taking the fire onto his shield with a shout of defiance.
+A contingent of the **Order of the Gauntlet**, led by **Harkas Vane**, a Cleric of **[Torm](https://forgottenrealms.fandom.com/wiki/Torm)**, stormed the fray. Lucian paused, expecting the "holy knights" to be pompous hindrances. Instead, he watched Vane step between a Cultist’s dragon-breath spell and a cowering farmhand, taking the fire onto his shield with a shout of defiance.
 
 In Luthcheq, the weak were culled to protect the strong. To see a warrior of such power bleed for a "nobody" shattered Lucian’s worldview.
 

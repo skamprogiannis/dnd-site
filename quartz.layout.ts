@@ -8,25 +8,10 @@ export const sharedPageComponents: SharedLayout = {
   afterBody: [],
   footer: Component.Footer({
     links: {
-      "Admin Login": "/static/admin/edit.html",
+      "Admin Login": "/edit",
       "Source Code": "https://github.com/skamprogiannis/dnd-site",
     },
   }),
-}
-
-const nameOverrides: Record<string, string> = {
-  npcs: "NPCs",
-  characters: "Characters",
-  lore: "Lore",
-  "custom-backgrounds": "Custom Backgrounds",
-}
-
-function unslugify(text: string): string {
-  if (!text) return ""
-  return text
-    .replace(/-/g, " ")
-    .replace(/_/g, " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
 // components for pages that display a single page (e.g. a single note)
@@ -58,29 +43,6 @@ export const defaultContentPageLayout: PageLayout = {
       folderClickBehavior: "collapse",
       folderDefaultState: "collapsed",
       useSavedState: true,
-      mapFn: (node) => {
-        const slug = node.slugSegment ? node.slugSegment.toLowerCase() : ""
-        if (nameOverrides[slug]) {
-          node.displayName = nameOverrides[slug]
-        } else if (slug === "lucian") {
-          node.displayName = "Lucian, the Pale Inquisitor"
-        } else {
-          node.displayName = unslugify(node.displayName)
-        }
-      },
-      filterFn: (node) => {
-        const slug = node.slugSegment ? node.slugSegment.toLowerCase() : ""
-        // Root node has no slugSegment or empty string
-        if (!slug) return true
-
-        // Hide internal assets/static folders
-        if (slug === "assets" || slug === "static") return false
-
-        // Hide index files (they are represented by the folder)
-        if (node.slug.endsWith("index")) return false
-
-        return true
-      },
     }),
   ],
   right: [
@@ -126,23 +88,6 @@ export const defaultListPageLayout: PageLayout = {
       folderClickBehavior: "collapse",
       folderDefaultState: "collapsed",
       useSavedState: true,
-      mapFn: (node) => {
-        const slug = node.slugSegment ? node.slugSegment.toLowerCase() : ""
-        if (nameOverrides[slug]) {
-          node.displayName = nameOverrides[slug]
-        } else if (slug === "lucian") {
-          node.displayName = "Lucian, the Pale Inquisitor"
-        } else {
-          node.displayName = unslugify(node.displayName)
-        }
-      },
-      filterFn: (node) => {
-        const slug = node.slugSegment ? node.slugSegment.toLowerCase() : ""
-        if (!slug) return true
-        if (slug === "assets" || slug === "static") return false
-        if (node.slug.endsWith("index")) return false
-        return true
-      },
     }),
   ],
   right: [

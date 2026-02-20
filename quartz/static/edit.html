@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager | Chronicles of Lemuria</title>
   <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <link rel="cms-config-url" type="text/yaml" href="/static/config.yml">
   <style>
     #vault-lock {
       position: fixed;
@@ -88,7 +88,7 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    (function() {
       const input = document.getElementById('vault-pass');
       const btn = document.getElementById('unlock-btn');
       const eye = document.getElementById('toggle-pass');
@@ -96,9 +96,16 @@
       const error = document.getElementById('error-msg');
       const eyeIcon = document.getElementById('eye-icon');
 
+      function loadCMS() {
+        const script = document.createElement('script');
+        script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
+        document.body.appendChild(script);
+      }
+
       function checkUnlock() {
         if (sessionStorage.getItem('vault_unlocked') === 'true') {
           lock.style.display = 'none';
+          loadCMS();
         }
       }
 
@@ -106,6 +113,7 @@
         if (input.value === "Kaarg") {
           sessionStorage.setItem('vault_unlocked', 'true');
           lock.style.display = 'none';
+          loadCMS();
         } else {
           error.style.display = 'block';
           input.value = '';
@@ -132,8 +140,7 @@
       });
 
       checkUnlock();
-    });
+    })();
   </script>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>

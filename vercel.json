@@ -1,10 +1,16 @@
 {
   "buildCommand": "npx quartz build",
   "outputDirectory": "public",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/edit",
+      "destination": "/static/edit.html"
+    },
+    {
       "source": "/admin",
-      "destination": "/static/admin/edit.html"
+      "destination": "/static/edit.html"
     }
   ],
   "headers": [

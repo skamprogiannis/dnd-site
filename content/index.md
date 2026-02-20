@@ -6,12 +6,14 @@ title: Welcome to the Chronicles
 
 Welcome to the digital archive of our D&D campaigns. Here you will find the legends, lore, and statistics of our heroes.
 
-## Characters
+## Navigation
 
-- [[characters/lucian|Lucian, the Pale Inquisitor]]
-- [[characters/kaarg-the-scourged|Kaarg, the Scourged]] (Coming Soon)
+- [[characters/index|Characters]]
+- [[npcs/index|NPCs]]
+- [[lore/index|Lore]]
+- [[resources|Resources]]
 
 ## How to Edit
 
 This site is powered by **Quartz** and **Decap CMS**.
-To edit content or add new characters, visit the [Admin Panel](/static/admin/edit.html).
+To edit content or add new characters, visit the <a href="/edit" data-router-ignore>Admin Panel</a>.
