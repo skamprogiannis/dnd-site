@@ -102,12 +102,83 @@
         document.body.appendChild(script);
       }
 
+      function checkSessionStorageAuth() {
+        try {
+          const tokenData = sessionStorage.getItem('decap_auth_token');
+          const authTime = sessionStorage.getItem('decap_auth_time');
+          
+          if (tokenData && authTime) {
+            // Token exists and was set recently (within last 10 seconds)
+            const timeDiff = Date.now() - parseInt(authTime);
+            if (timeDiff < 10000) {
+              console.log("Found auth token in sessionStorage, triggering CMS login...");
+              sessionStorage.removeItem('decap_auth_token');
+              sessionStorage.removeItem('decap_auth_time');
+              
+              // Dispatch the authorization event for Decap CMS
+              const event = new MessageEvent('message', {
+                data: "authorization:github:success:" + tokenData,
+                origin: window.location.origin,
+                bubbles: false,
+                cancelable: false
+              });
+              window.dispatchEvent(event);
+              
+              return true;
+            }
+          }
+        } catch(e) {
+          console.log("sessionStorage check failed:", e);
+        }
+        return false;
+      }
+
       function checkUnlock() {
+        // Check if already unlocked
         if (sessionStorage.getItem('vault_unlocked') === 'true') {
           lock.style.display = 'none';
           loadCMS();
+          return;
+        }
+        
+        // Check for auth token in sessionStorage (from OAuth popup)
+        if (checkSessionStorageAuth()) {
+          lock.style.display = 'none';
+          loadCMS();
+          return;
         }
       }
+
+      // Listen for postMessage from OAuth popup
+      window.addEventListener('message', function(e) {
+        console.log("Received message:", e.data);
+        
+        // Handle the token message
+        if (e.data && e.data.startsWith('authorization:')) {
+          // Let Decap CMS handle it
+        } else if (e.data === 'give_me_the_token') {
+          // We don't have a token to give
+        } else if (e.data.startsWith('here_is_the_token:')) {
+          // Got token from another window
+          const tokenData = e.data.replace('here_is_the_token:', '');
+          sessionStorage.setItem('decap_auth_token', tokenData);
+          sessionStorage.setItem('decap_auth_time', Date.now().toString());
+          checkSessionStorageAuth();
+        }
+      });
+
+      // Poll for sessionStorage changes (for when popup closes before main window detects)
+      var pollInterval = setInterval(function() {
+        if (lock.style.display === 'none') {
+          clearInterval(pollInterval);
+          return;
+        }
+        if (checkSessionStorageAuth()) {
+          clearInterval(pollInterval);
+          lock.style.display = 'none';
+          loadCMS();
+        }
+      }, 500);
 
       function doUnlock() {
         if (input.value === "Kaarg") {
